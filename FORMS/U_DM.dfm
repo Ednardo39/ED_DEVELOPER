@@ -17,7 +17,7 @@ object DM: TDM
   end
   object FDTransaction1: TFDTransaction
     Connection = Conexao
-    Left = 152
+    Left = 160
     Top = 16
   end
 end
