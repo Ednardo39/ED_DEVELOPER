@@ -1,0 +1,22 @@
+object DM: TDM
+  Height = 255
+  Width = 319
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=C:\ED_DEVELOPER\EXE\DB\BASE_DB.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Protocol=TCPIP'
+      'Server=localhost'
+      'Port=3050'
+      'CharacterSet=WIN1253'
+      'DriverID=FB')
+    Left = 48
+    Top = 16
+  end
+  object FDTransaction1: TFDTransaction
+    Connection = FDConnection1
+    Left = 152
+    Top = 16
+  end
+end

@@ -1,0 +1,73 @@
+unit U_GerenciarDB;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uImportExcel, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Grids, Vcl.ComCtrls;
+
+type
+  Tfrm_GerenciarDB = class(TForm)
+    ImportExcel1: TImportExcel;
+    Panel1: TPanel;
+    btnImportar: TSpeedButton;
+    bntSalvar: TSpeedButton;
+    btnBancoDados: TSpeedButton;
+    Label1: TLabel;
+    pnlDelLote: TPanel;
+    btnDelLote: TSpeedButton;
+    edtLote: TEdit;
+    StringGrid1: TStringGrid;
+    OpenDialog1: TOpenDialog;
+    ProgressBar1: TProgressBar;
+    procedure btnImportarClick(Sender: TObject);
+    procedure bntSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure importar;
+    procedure salvar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_GerenciarDB: Tfrm_GerenciarDB;
+
+implementation
+
+{$R *.dfm}
+
+{ Tfrm_GerenciarDB }
+
+procedure Tfrm_GerenciarDB.bntSalvarClick(Sender: TObject);
+begin
+//Salvar palnilha no banco ao clicar no botão
+  salvar;
+end;
+
+procedure Tfrm_GerenciarDB.btnImportarClick(Sender: TObject);
+begin
+importar;
+end;
+
+procedure Tfrm_GerenciarDB.importar;
+var
+  vFile: string;
+begin
+  //Processo para importar os dados de planilhas excel
+  if OpenDialog1.Execute then
+  begin
+    vFile := OpenDialog1.FileName;
+    importExcel1.ExcelFile := vFile;
+    ImportExcel1.ExcelParaStringGrid(StringGrid1, ProgressBar1);
+  end;
+
+end;
+
+procedure Tfrm_GerenciarDB.salvar;
+begin
+
+end;
+
+end.

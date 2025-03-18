@@ -1,0 +1,34 @@
+unit U_DelLote;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.ComCtrls;
+
+type
+  TfrmDelLote = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    SpeedButton1: TSpeedButton;
+    ImageList1: TImageList;
+    edtLote: TEdit;
+    SpeedButton2: TSpeedButton;
+    StringGrid1: TStringGrid;
+    ProgressBar1: TProgressBar;
+    SpeedButton3: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDelLote: TfrmDelLote;
+
+implementation
+
+{$R *.dfm}
+
+end.

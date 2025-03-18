@@ -1,0 +1,48 @@
+unit U_RelFuracao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoRel, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  frxSmartMemo, frxClass, frxDBSet, frCoreClasses, System.ImageList,
+  Vcl.ImgList, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  Tfrm_RelFuracao = class(Tfrm_PadraoRel)
+    lbl_EdtInicio: TLabel;
+    mk_inicio: TMaskEdit;
+    mk_fim: TMaskEdit;
+    lbl_EdtFinal: TLabel;
+    ImageList4: TImageList;
+    StatusBar1: TStatusBar;
+    Timer1: TTimer;
+    DBGrid1: TDBGrid;
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_RelFuracao: Tfrm_RelFuracao;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_RelFuracao.Timer1Timer(Sender: TObject);
+begin
+//Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='Relatório de FURAÇÃO:';
+
+end;
+
+end.

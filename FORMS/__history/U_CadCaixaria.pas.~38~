@@ -1,0 +1,233 @@
+unit U_CadCaixaria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoCadastro, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tfrm_CadCaixaria = class(Tfrm_PadraoCadastro)
+    StatusBar1: TStatusBar;
+    Timer1: TTimer;
+    Q_PadraoNUMERO_DO_LOTE: TStringField;
+    Q_PadraoNUMERO_DO_PEDIDO: TStringField;
+    Q_PadraoNUMERO_DA_ORDEM: TStringField;
+    Q_PadraoDESCRICAO_PECA: TStringField;
+    Q_PadraoID: TStringField;
+    Q_PadraoDESENHO_PROGRAMADO_1: TStringField;
+    Q_PadraoFURACAO: TStringField;
+    Q_PadraoDT_TRAB_FURACAO: TDateField;
+    Q_PadraoRETRAB_FURACAO: TStringField;
+    Q_PadraoDT_RETRAB_FURACAO: TDateField;
+    Panel2: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    lbl_StatusTrab: TLabel;
+    lbl_DtTrab: TLabel;
+    lbl_DtReTrab: TLabel;
+    lbl_StatusRetrab: TLabel;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    pnl_Salvar: TPanel;
+    btn_Salvar: TSpeedButton;
+    edt_DtTrab: TDBEdit;
+    edt_StatusRetrab: TDBEdit;
+    edt_DtReTrab: TDBEdit;
+    procedure Timer1Timer(Sender: TObject);
+    procedure edt_CodPecaKeyPress(Sender: TObject; var Key: Char);
+    procedure edt_CodigoOPKeyPress(Sender: TObject; var Key: Char);
+    procedure btn_CodPrincipalClick(Sender: TObject);
+    procedure btn_SalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure buscarCodPeca;
+    procedure buscarCodOP;
+    procedure acaoAposClique;
+    procedure salvar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_CadCaixaria: Tfrm_CadCaixaria;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_CadCaixaria.salvar;
+begin
+  Q_Padrao.Open;
+  if MessageDlg('Deseja editar esse registro?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+  begin
+
+    Q_Padrao.edit;
+    MessageDlg('Registro editado com sucesso!',mtInformation,[mbOk],0);
+    edt_CodPeca.Text := '';
+    edt_CodigoOP.Text := '';
+    Q_Padrao.FetchAll;
+    Q_Padrao.Close;
+  end
+  else
+    Abort;
+end;
+
+procedure Tfrm_CadCaixaria.buscarCodOP;
+begin
+  Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edt_CodPeca.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND NUMERO_DA_ORDEM = ' + QuotedStr(edt_CodPeca.Text));
+      end;
+
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    acaoAposClique;
+
+    if Trim(edt_StatusTrab.Text) ='OK' then
+    begin
+     if MessageDlg('Peça já TRABALHADA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_StatusTrab.Visible := False;
+        lbl_StatusTrab.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_StatusRetrab.Visible := True;
+        edt_StatusRetrab.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_StatusRetrab.SetFocus;
+
+      end
+    end;
+
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+        edt_CodPeca.SetFocus;
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadCaixaria.buscarCodPeca;
+begin
+  Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edt_CodPeca.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND ID = ' + QuotedStr(edt_CodPeca.Text));
+      end;
+
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    acaoAposClique;
+
+    if Trim(edt_StatusTrab.Text) ='OK' then
+    begin
+     if MessageDlg('Peça já TRABALHADA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_StatusTrab.Visible := False;
+        lbl_StatusTrab.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_StatusRetrab.Visible := True;
+        edt_StatusRetrab.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_StatusRetrab.SetFocus;
+
+      end
+    end;
+
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+        edt_CodPeca.SetFocus;
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadCaixaria.edt_CodigoOPKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    buscarCodOP;
+    acaoAposClique;
+  end;
+end;
+
+procedure Tfrm_CadCaixaria.acaoAposClique;
+begin
+    edt_CodPeca.Text  := ('');
+    edt_CodigoOP.Text := ('');
+    edt_StatusTrab.Visible := True;
+    lbl_StatusTrab.Visible := True;
+    edt_StatusTrab.Visible := True;
+    edt_DtTrab.Visible := True;
+    lbl_DtTrab.Visible := True;
+    lbl_StatusRetrab.Visible := False;
+    edt_StatusRetrab.Visible := False;
+    edt_DtReTrab.Visible := False;
+    lbl_DtReTrab.Visible := False;
+    edt_StatusTrab.SetFocus;
+end;
+
+procedure Tfrm_CadCaixaria.btn_CodPrincipalClick(Sender: TObject);
+begin
+    buscarCodPeca;
+    acaoAposClique;
+end;
+
+procedure Tfrm_CadCaixaria.btn_SalvarClick(Sender: TObject);
+begin
+  salvar;
+end;
+
+procedure Tfrm_CadCaixaria.edt_CodPecaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    buscarCodOP;
+    acaoAposClique;
+  end;
+end;
+
+procedure Tfrm_CadCaixaria.Timer1Timer(Sender: TObject);
+begin
+//Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='CAIXARIA: FURAÇÃO';
+end;
+
+end.

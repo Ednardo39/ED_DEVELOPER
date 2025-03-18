@@ -1,0 +1,176 @@
+object frm_GerenciarDB: Tfrm_GerenciarDB
+  Left = 0
+  Top = 0
+  Caption = 'frm_GerenciarDB'
+  ClientHeight = 325
+  ClientWidth = 837
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 837
+    Height = 57
+    Align = alTop
+    Color = 15458266
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitLeft = -202
+    ExplicitWidth = 798
+    object btnImportar: TSpeedButton
+      Left = 1
+      Top = 1
+      Width = 161
+      Height = 55
+      Align = alLeft
+      Caption = ' IMPORTAR'
+      ImageIndex = 0
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = 4294370
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = btnImportarClick
+      ExplicitLeft = 50
+    end
+    object bntSalvar: TSpeedButton
+      Left = 162
+      Top = 1
+      Width = 161
+      Height = 55
+      Align = alLeft
+      Caption = 'SALVAR'
+      ImageIndex = 2
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -16
+      Font.Name = 'Segoe UI Black'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = bntSalvarClick
+      ExplicitLeft = 256
+      ExplicitTop = 3
+      ExplicitHeight = 41
+    end
+    object btnBancoDados: TSpeedButton
+      Left = 637
+      Top = 1
+      Width = 199
+      Height = 55
+      Cursor = crHandPoint
+      Align = alRight
+      Caption = 'LIMPAR BANCO'
+      ImageIndex = 4
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = 402150
+      Font.Height = -16
+      Font.Name = 'Segoe UI Black'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitLeft = 585
+      ExplicitTop = -4
+    end
+    object Label1: TLabel
+      Left = 329
+      Top = 6
+      Width = 36
+      Height = 21
+      Caption = 'LOTE'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI Semibold'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object pnlDelLote: TPanel
+      Left = 469
+      Top = 1
+      Width = 168
+      Height = 55
+      Align = alRight
+      BevelOuter = bvNone
+      Color = clRed
+      ParentBackground = False
+      TabOrder = 0
+      ExplicitLeft = 430
+      object btnDelLote: TSpeedButton
+        Left = 0
+        Top = 0
+        Width = 168
+        Height = 55
+        Align = alClient
+        Caption = 'DELETAR LOTE'
+        ImageIndex = 5
+        Flat = True
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Segoe UI Black'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 162
+        ExplicitHeight = 50
+      end
+    end
+    object edtLote: TEdit
+      Left = 329
+      Top = 26
+      Width = 88
+      Height = 25
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Semibold'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object StringGrid1: TStringGrid
+    Left = 0
+    Top = 57
+    Width = 837
+    Height = 251
+    Align = alClient
+    TabOrder = 1
+    ExplicitHeight = 232
+  end
+  object ProgressBar1: TProgressBar
+    Left = 0
+    Top = 308
+    Width = 837
+    Height = 17
+    Align = alBottom
+    TabOrder = 2
+    ExplicitLeft = 272
+    ExplicitTop = 296
+    ExplicitWidth = 150
+  end
+  object ImportExcel1: TImportExcel
+    Left = 504
+    Top = 240
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 408
+    Top = 240
+  end
+  object QPRINC: TFDQuery
+    Left = 416
+    Top = 104
+  end
+  object dsPRINC: TDataSource
+    DataSet = QPRINC
+    Left = 536
+    Top = 120
+  end
+end

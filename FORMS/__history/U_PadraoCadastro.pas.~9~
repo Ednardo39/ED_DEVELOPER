@@ -1,0 +1,33 @@
+unit U_PadraoCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  System.ImageList, Vcl.ImgList, Vcl.Buttons;
+
+type
+  Tfrm_PadraoCadastro = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    edt_CodPeca: TEdit;
+    SpeedButton1: TSpeedButton;
+    ImageList1: TImageList;
+    Label2: TLabel;
+    edt_CodigoOP: TEdit;
+    SpeedButton2: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_PadraoCadastro: Tfrm_PadraoCadastro;
+
+implementation
+
+{$R *.dfm}
+
+end.

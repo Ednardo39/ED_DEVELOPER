@@ -1,0 +1,219 @@
+unit U_Principal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.CategoryButtons,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Buttons, Vcl.WinXCtrls, Vcl.StdCtrls,
+  System.ImageList, Vcl.ImgList, Vcl.Navigation;
+
+type
+  Tfrm_Principal = class(TForm)
+    sMenu: TSplitView;
+    Panel1: TPanel;
+    btnMenu: TSpeedButton;
+    Image1: TImage;
+    CategoryMenuButtons: TCategoryButtons;
+    SplitView1: TSplitView;
+    Panel4: TPanel;
+    Image4: TImage;
+    SpeedButton3: TSpeedButton;
+    CategoryButtons2: TCategoryButtons;
+    sSubMenuBanco: TSplitView;
+    Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
+    Label2: TLabel;
+    CategorySubmenuButtons: TCategoryButtons;
+    sSubMenuProducao: TSplitView;
+    Panel3: TPanel;
+    SpeedButton2: TSpeedButton;
+    Label1: TLabel;
+    CategoryButtons1: TCategoryButtons;
+    sSubMenuRelatorios1: TSplitView;
+    Panel5: TPanel;
+    SpeedButton4: TSpeedButton;
+    Label3: TLabel;
+    CategoryButtons3: TCategoryButtons;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    pnl_Container: TPanel;
+    ImageList: TImageList;
+    sSubMenuRelatorios: TSplitView;
+    Panel8: TPanel;
+    SpeedButton5: TSpeedButton;
+    Label4: TLabel;
+    CategoryButtons4: TCategoryButtons;
+    ImageList1: TImageList;
+    procedure btnMenuClick(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items0Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items1Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items2Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items3Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items1Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items2Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items3Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items4Click(Sender: TObject);
+    procedure CategoryButtons4Categories0Items5Click(Sender: TObject);
+    procedure CategoryButtons4Categories0Items4Click(Sender: TObject);
+    procedure CategoryButtons4Categories0Items3Click(Sender: TObject);
+    procedure CategoryButtons4Categories0Items1Click(Sender: TObject);
+    procedure CategoryButtons4Categories0Items0Click(Sender: TObject);
+    procedure CategorySubmenuButtonsCategories0Items0Click(Sender: TObject);
+    procedure CategorySubmenuButtonsCategories0Items1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Principal: Tfrm_Principal;
+
+implementation
+
+{$R *.dfm}
+
+uses U_CadBorda, U_CadCorte, U_CadFuracao, U_CadUsinagem, U_DM, U_GestaoDB,
+  U_RelUsinagens, U_RelCorte, U_RelBorda, U_RelFuracao, U_DelLote;
+
+procedure Tfrm_Principal.btnMenuClick(Sender: TObject);
+begin
+// Abre ou fecha o menu
+  sMenu.Opened := NOT sMenu.Opened;
+end;
+
+procedure Tfrm_Principal.CategorySubmenuButtonsCategories0Items0Click(
+  Sender: TObject);
+begin
+//Chamar tela de FURAÇÃO
+  TNavigation.Open(Tfrm_GestaoDB, frm_GestaoDB, pnl_Container);
+  sSubMenuBanco.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategorySubmenuButtonsCategories0Items1Click(
+  Sender: TObject);
+begin
+  //Chamar tela de DELETAR LOTE
+  TNavigation.Open(TfrmDelLote, frmDelLote, pnl_Container);
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons1Categories0Items1Click(
+  Sender: TObject);
+begin
+//Chamar tela de CORTE
+  TNavigation.Open(Tfrm_CadCorte, frm_CadCorte, pnl_Container);
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons1Categories0Items2Click(
+  Sender: TObject);
+begin
+//Chamar tela de usinagem
+  TNavigation.Open(Tfrm_CadUsinagem, frm_CadUsinagem, pnl_Container);
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons1Categories0Items3Click(
+  Sender: TObject);
+begin
+//Chamar tela de FURAÇÃO
+  TNavigation.Open(Tfrm_CadFuracao, frm_CadFuracao, pnl_Container);
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons1Categories0Items4Click(
+  Sender: TObject);
+begin
+// Abre ou fecha o subMenuProdução
+  sSubMenuProducao.Opened := NOT sSubMenuProducao.Opened;
+  sSubMenuBanco.Opened := False; //Fecha subMenuBanco
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_Principal.CategoryButtons4Categories0Items0Click(
+  Sender: TObject);
+begin
+//Chamar tela de relatório Borda
+  TNavigation.Open(Tfrm_RelBorda, frm_RelBorda, pnl_Container);
+  sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons4Categories0Items1Click(
+  Sender: TObject);
+begin
+//Chamar tela de relatório corte
+  TNavigation.Open(Tfrm_RelCorte, frm_RelCorte, pnl_Container);
+  sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons4Categories0Items3Click(
+  Sender: TObject);
+begin
+//Chamar tela de relatório furação
+  TNavigation.Open(Tfrm_RelFuracao, frm_RelFuracao, pnl_Container);
+  sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons4Categories0Items4Click(
+  Sender: TObject);
+begin
+//Chamar tela de relatório usinagem
+  TNavigation.Open(Tfrm_RelUsinagens, frm_RelUsinagens, pnl_Container);
+  sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_Principal.CategoryButtons4Categories0Items5Click(
+  Sender: TObject);
+begin
+// Abre ou fecha o sSubMenuRelatorios
+  sSubMenuRelatorios.Opened := NOT sSubMenuRelatorios.Opened;
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  sSubMenuBanco.Opened := False; //Fecha subMenuProdução
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_Principal.CategoryMenuButtonsCategories0Items0Click(
+  Sender: TObject);
+begin
+// Abre ou fecha o subMenuBanco
+  sSubMenuBanco.Opened := NOT sSubMenuBanco.Opened;
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_Principal.CategoryMenuButtonsCategories0Items1Click(
+  Sender: TObject);
+begin
+// Abre ou fecha o subMenuProdução
+  sSubMenuProducao.Opened := NOT sSubMenuProducao.Opened;
+  sSubMenuBanco.Opened := False; //Fecha subMenuBanco
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  sSubMenuBanco.Opened := False; //Fecha subMenuProdução
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_Principal.CategoryMenuButtonsCategories0Items2Click(
+  Sender: TObject);
+begin
+// Abre ou fecha o subMenuRelatorio
+  sSubMenuRelatorios.Opened := NOT sSubMenuRelatorios.Opened;
+  sSubMenuBanco.Opened := False; //Fecha subMenuBanco
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+  sSubMenuBanco.Opened := False; //Fecha subMenuProdução
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_Principal.CategoryMenuButtonsCategories0Items3Click(
+  Sender: TObject);
+begin
+Application.Terminate;
+end;
+
+end.

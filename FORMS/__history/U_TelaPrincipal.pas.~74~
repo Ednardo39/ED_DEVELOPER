@@ -1,0 +1,160 @@
+unit U_TelaPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage, System.ImageList, Vcl.ImgList, Vcl.CategoryButtons,
+  Vcl.StdCtrls, Vcl.Navigation;
+
+type
+  Tfrm_TelaPrincipal = class(TForm)
+    sMenu: TSplitView;
+    Panel1: TPanel;
+    btnMenu: TSpeedButton;
+    Image1: TImage;
+    ImageList: TImageList;
+    CategoryMenuButtons: TCategoryButtons;
+    sSubMenuBanco: TSplitView;
+    Panel2: TPanel;
+    CategorySubmenuButtons: TCategoryButtons;
+    sSubMenuProducao: TSplitView;
+    Panel3: TPanel;
+    SpeedButton2: TSpeedButton;
+    CategoryButtons1: TCategoryButtons;
+    SpeedButton1: TSpeedButton;
+    SplitView1: TSplitView;
+    Panel4: TPanel;
+    Image4: TImage;
+    SpeedButton3: TSpeedButton;
+    CategoryButtons2: TCategoryButtons;
+    Label1: TLabel;
+    Label2: TLabel;
+    sSubMenuRelatorios: TSplitView;
+    Panel5: TPanel;
+    SpeedButton4: TSpeedButton;
+    CategoryButtons3: TCategoryButtons;
+    Label3: TLabel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    pnl_Container: TPanel;
+    procedure btnMenuClick(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items3Click(Sender: TObject);
+    procedure btnCloseSMBDClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items0Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items1Click(Sender: TObject);
+    procedure CategoryMenuButtonsCategories0Items2Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items2Click(Sender: TObject);
+    procedure CategoryButtons1Categories0Items1Click(Sender: TObject);
+  private
+    { Private declarations }
+    procedure CloseSubMenuBanco;
+    procedure ClosesSubMenuProd;
+    procedure closeSubMenuRelatorios;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_TelaPrincipal: Tfrm_TelaPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+uses U_CadUsinagens, U_CadCorte;
+
+procedure Tfrm_TelaPrincipal.btnMenuClick(Sender: TObject);
+begin
+  // Abre ou fecha o menu
+  sMenu.Opened := NOT sMenu.Opened;
+end;
+
+procedure Tfrm_TelaPrincipal.CategoryButtons1Categories0Items2Click(
+  Sender: TObject);
+begin
+  //Chamar tela de usinagem
+  TNavigation.Open(Tfrm_CadUsinagens, frm_CadUsinagens, pnl_Container);
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+end;
+
+procedure Tfrm_TelaPrincipal.CategoryMenuButtonsCategories0Items0Click(
+  Sender: TObject);
+begin
+  // Abre ou fecha o subMenuBanco
+  sSubMenuBanco.Opened := NOT sSubMenuBanco.Opened;
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_TelaPrincipal.CategoryMenuButtonsCategories0Items1Click(
+  Sender: TObject);
+begin
+  // Abre ou fecha o subMenuProdução
+  sSubMenuProducao.Opened := NOT sSubMenuProducao.Opened;
+  sSubMenuBanco.Opened := False; //Fecha subMenuBanco
+  sSubMenuRelatorios.Opened := False; //Feche subMenuRelatorio
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_TelaPrincipal.CategoryMenuButtonsCategories0Items2Click(
+  Sender: TObject);
+begin
+  // Abre ou fecha o subMenuRelatorio
+  sSubMenuRelatorios.Opened := NOT sSubMenuRelatorios.Opened;
+  sSubMenuBanco.Opened := False; //Fecha subMenuBanco
+  sSubMenuProducao.Opened := False; //Fecha subMenuProdução
+  CategorySubmenuButtons.SelectedItem := nil;
+end;
+
+procedure Tfrm_TelaPrincipal.CategoryMenuButtonsCategories0Items3Click(
+  Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure Tfrm_TelaPrincipal.ClosesSubMenuProd;
+begin
+   if sSubMenuProducao.Opened then
+    begin
+        sSubMenuProducao.Opened := false;
+        CategorySubmenuButtons.SelectedItem := nil;
+        sMenu.SetFocus;
+    end;
+end;
+
+procedure Tfrm_TelaPrincipal.CloseSubMenuBanco;
+begin
+  if sSubMenuBanco.Opened then
+    begin
+        sSubMenuBanco.Opened := false;
+        CategorySubmenuButtons.SelectedItem := nil;
+        sMenu.SetFocus;
+    end;
+end;
+
+procedure Tfrm_TelaPrincipal.closeSubMenuRelatorios;
+begin
+  if sSubMenuRelatorios.Opened then
+    begin
+        sSubMenuRelatorios.Opened := false;
+        CategorySubmenuButtons.SelectedItem := nil;
+        sMenu.SetFocus;
+    end;
+end;
+
+procedure Tfrm_TelaPrincipal.SpeedButton1Click(Sender: TObject);
+begin
+  CloseSubMenuBanco;
+end;
+
+procedure Tfrm_TelaPrincipal.btnCloseSMBDClick(Sender: TObject);
+begin
+  ClosesSubMenuProd;
+end;
+
+end.

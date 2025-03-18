@@ -1,0 +1,214 @@
+unit U_GestaoDB;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uImportExcel, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.ComCtrls, Vcl.Grids, System.ImageList, Vcl.ImgList,
+  Vcl.Imaging.jpeg;
+
+type
+  Tfrm_GestaoDB = class(TForm)
+    ImportExcel1: TImportExcel;
+    Panel1: TPanel;
+    btnImportar: TSpeedButton;
+    bntSalvar: TSpeedButton;
+    QPRINC: TFDQuery;
+    dsPRINC: TDataSource;
+    OpenDialog1: TOpenDialog;
+    ProgressBar1: TProgressBar;
+    QPRINCCOD_CLIENTE: TStringField;
+    QPRINCRAZAO_SOCIAL_CLIENTE: TStringField;
+    QPRINCORDEM_COMPRA_PEDIDO: TStringField;
+    QPRINCNOME_PLANEJADOR: TStringField;
+    QPRINCQUANTIDADE: TStringField;
+    QPRINCALTURA_PECA: TStringField;
+    QPRINCLARGURA_PECA: TStringField;
+    QPRINCESPESSURA_PECA: TStringField;
+    QPRINCCODIGO_MATERIAL: TStringField;
+    QPRINCDESCRICAO_MATERIAL: TStringField;
+    QPRINCLARGURA_CORTE_MATERIAL: TStringField;
+    QPRINCALTURA_CORTE_MATERIAL: TStringField;
+    QPRINCIMAGEM_MATERIAL: TStringField;
+    QPRINCCODIGO_PECA: TStringField;
+    QPRINCCOMPLEMENTO: TStringField;
+    QPRINCDESCRICAO_PECA: TStringField;
+    QPRINCDESENHO_PROGRAMADO_1: TStringField;
+    QPRINCDESENHO_PROGRAMADO_2: TStringField;
+    QPRINCDESENHO_PROGRAMADO_3: TStringField;
+    QPRINCVEIO_MATERIAL: TStringField;
+    QPRINCBORDA_SUPERIOR: TStringField;
+    QPRINCBORDA_INFERIOR: TStringField;
+    QPRINCBORDA_ESQUERDA: TStringField;
+    QPRINCBORDA_DIREITA: TStringField;
+    QPRINCDESTINO_IMPRESSAO: TStringField;
+    QPRINCID: TStringField;
+    QPRINCPOSTO_OPERACIONAL: TStringField;
+    QPRINCNUMERO_DO_LOTE: TStringField;
+    QPRINCNUMERO_DO_PEDIDO: TStringField;
+    QPRINCNUMERO_DO_BOX: TStringField;
+    QPRINCNUMERO_DA_ORDEM: TStringField;
+    QPRINCDATA_ENTREGA_LOTE: TStringField;
+    QPRINCID_PROMOB: TStringField;
+    QPRINCLOGO: TStringField;
+    StringGrid1: TStringGrid;
+    ImageList1: TImageList;
+    Image1: TImage;
+    SpeedButton3: TSpeedButton;
+    ImageList2: TImageList;
+    procedure btnImportarClick(Sender: TObject);
+    procedure bntSalvarClick(Sender: TObject);
+    procedure btnDelLoteClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure importar;
+    procedure salvar;
+    procedure delLote;
+    procedure limparDB;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_GestaoDB: Tfrm_GestaoDB;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+//Salvar palnilha no banco ao clicar no botão
+procedure Tfrm_GestaoDB.bntSalvarClick(Sender: TObject);
+begin
+  salvar;
+end;
+
+// Deletar lote especifico do banco
+procedure Tfrm_GestaoDB.btnDelLoteClick(Sender: TObject);
+begin
+delLote;
+end;
+
+// Importar planilha excel
+procedure Tfrm_GestaoDB.btnImportarClick(Sender: TObject);
+begin
+importar;
+end;
+
+// Deletar apenas um lote especifico
+procedure Tfrm_GestaoDB.delLote;
+begin
+//if MessageDlg('Pretende realmente EXCLUIR o LOTE ' + edtLote.Text + '?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+//  begin
+//  QPrinc.Close;
+//  QPrinc.SQL.Clear;
+//  QPrinc.SQL.Add('DELETE FROM TB_BASE_DADOS ');
+//  QPrinc.SQL.Add(' WHERE NUMERO_DO_LOTE =:PNUMLOTE');
+//  // criamos o parametro
+//  QPrinc.ParamByName('PNUMLOTE').AsString := edtLote.Text;
+//  // aponta para o campo do parametro
+//  //  Q_ProdPesq.SQL.Add(' WHERE 1 = 1');
+//  QPrinc.ExecSQL;
+//  QPrinc.Close;
+//  MessageDlg('O lote '+edtLote.Text+' foi excluido com sucesso!',mtInformation,[mbOk],0);
+//  end;
+end;
+
+//Processo para importar os dados de planilhas excel
+procedure Tfrm_GestaoDB.importar;
+var
+  vFile: string;
+begin
+  if OpenDialog1.Execute then
+  begin
+    vFile := OpenDialog1.FileName;
+    importExcel1.ExcelFile := vFile;
+    ImportExcel1.ExcelParaStringGrid(StringGrid1, ProgressBar1);
+  end;
+
+end;
+
+// Limpar todos os dados do banco
+procedure Tfrm_GestaoDB.limparDB;
+begin
+QPrinc.Close;
+  QPrinc.SQL.Clear;
+  QPrinc.SQL.Add('DELETE FROM TB_BASE_DADOS WHERE COD_CLIENTE >= 0 ');
+//  Q_ProdPesq.SQL.Add(' WHERE 1 = 1');
+  QPrinc.ExecSQL;
+  QPrinc.Close;
+  MessageDlg('Bancos de dados foi limpo com sucesso!',mtInformation,[mbOk],0);
+end;
+
+// Salvar os dados da planilha no banco
+procedure Tfrm_GestaoDB.salvar;
+var
+  I : Integer;
+  F: Integer;
+begin
+  QPrinc.Open;
+  ProgressBar1.Max := StringGrid1.RowCount;
+  ProgressBar1.Position := 0;
+//  cdsArquivos.DisableControls; //Desabilita o acompanhamento da tabela ao carregar
+  for I := 1 to Pred(StringGrid1.RowCount) do
+    begin
+      Application.ProcessMessages;
+      ProgressBar1.Position := ProgressBar1.Position +1;
+//      cdsArquivos.Insert;
+
+      QPrinc.Insert;
+      QPrincCOD_CLIENTE.AsString := StringGrid1.Cells[0, I];//Coluna '0' e linha 'I'
+      QPrincRAZAO_SOCIAL_CLIENTE.AsString := StringGrid1.Cells[1, I];//Coluna '1' e linha 'I'
+      QPrincORDEM_COMPRA_PEDIDO.AsString := StringGrid1.Cells[2, I];//Coluna '2' e linha 'I'
+      QPrincNOME_PLANEJADOR.AsString := StringGrid1.Cells[3, I];//Coluna '3' e linha 'I'
+      QPrincQUANTIDADE.AsString := StringGrid1.Cells[4, I];//Coluna '4' e linha 'I'
+      QPrincALTURA_PECA.AsString := StringGrid1.Cells[5, I];//Coluna '5' e linha 'I'
+      QPrincLARGURA_PECA.AsString := StringGrid1.Cells[6, I];//Coluna '6' e linha 'I'
+      QPrincESPESSURA_PECA.AsString := StringGrid1.Cells[7, I];//Coluna '7' e linha 'I'
+      QPrincCODIGO_MATERIAL.AsString := StringGrid1.Cells[8, I];//Coluna '8' e linha 'I'
+      QPrincDESCRICAO_MATERIAL.AsString := StringGrid1.Cells[9, I];//Coluna '9' e linha 'I'
+      QPrincLARGURA_CORTE_MATERIAL.AsString := StringGrid1.Cells[10, I];//Coluna '10' e linha 'I'
+      QPrincALTURA_CORTE_MATERIAL.AsString := StringGrid1.Cells[11, I];//Coluna '11' e linha 'I'
+      QPrincIMAGEM_MATERIAL.AsString := StringGrid1.Cells[12, I];//Coluna '12' e linha 'I'
+      QPrincCODIGO_PECA.AsString := StringGrid1.Cells[13, I];//Coluna '13' e linha 'I'
+      QPrincCOMPLEMENTO.AsString := StringGrid1.Cells[14, I];//Coluna '14' e linha 'I'
+      QPrincDESCRICAO_PECA.AsString := StringGrid1.Cells[15, I];//Coluna '15' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_1.AsString := StringGrid1.Cells[16, I];//Coluna '16' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_2.AsString := StringGrid1.Cells[17, I];//Coluna '17' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_3.AsString := StringGrid1.Cells[18, I];//Coluna '18 e linha 'I'
+      QPrincVEIO_MATERIAL.AsString := StringGrid1.Cells[19, I];//Coluna '19' e linha 'I'
+      QPrincBORDA_SUPERIOR.AsString := StringGrid1.Cells[20, I];//Coluna '20' e linha 'I'
+      QPrincBORDA_INFERIOR.AsString := StringGrid1.Cells[21, I];//Coluna '21' e linha 'I'
+      QPrincBORDA_ESQUERDA.AsString := StringGrid1.Cells[22, I];//Coluna '22' e linha 'I'
+      QPrincBORDA_DIREITA.AsString := StringGrid1.Cells[23, I];//Coluna '23' e linha 'I'
+      QPrincDESTINO_IMPRESSAO.AsString := StringGrid1.Cells[24, I];//Coluna '24' e linha 'I'
+      QPrincID.AsString := StringGrid1.Cells[25, I];//Coluna '25' e linha 'I'
+      QPrincPOSTO_OPERACIONAL.AsString := StringGrid1.Cells[26, I];//Coluna '26' e linha 'I'
+      QPrincNUMERO_DO_LOTE.AsString := StringGrid1.Cells[27, I];//Coluna '27' e linha 'I'
+      QPrincNUMERO_DO_PEDIDO.AsString := StringGrid1.Cells[28, I];//Coluna '28' e linha 'I'
+      QPrincNUMERO_DO_BOX.AsString := StringGrid1.Cells[29, I];//Coluna '29' e linha 'I'
+      QPrincNUMERO_DA_ORDEM.AsString := StringGrid1.Cells[30, I];//Coluna '30' e linha 'I'
+      QPrincDATA_ENTREGA_LOTE.AsString := StringGrid1.Cells[31, I];//Coluna '31' e linha 'I'
+      QPrincID_PROMOB.AsString := StringGrid1.Cells[32, I];//Coluna '32' e linha 'I'
+      QPrincLOGO.AsString := StringGrid1.Cells[33, I];//Coluna '33' e linha 'I'
+////      QPrincSTATUS.AsString := StringGrid1.Cells[34, I];//Coluna '34' e linha 'I'
+//      QPrincCORTE.AsString := StringGrid1.Cells[34, I];//Coluna '35' e linha 'I'
+//      QPrincUSINAGEM.AsString := StringGrid1.Cells[35, I];//Coluna '36' e linha 'I'
+//      QPrincRETRABALHO.AsString := StringGrid1.Cells[36, I];//Coluna '37' e linha 'I'
+//      QPrincDT_TRABALHO.AsString := StringGrid1.Cells[37, I];//Coluna '38' e linha 'I'
+
+//      cdsArquivos.Post;
+      QPrinc.Post;;
+
+    end;
+//    cdsArquivos.EnableConstraints; //Atualiza a tabela no final
+    ShowMessage('CONCLUIDO.');
+
+end;
+
+end.

@@ -1,0 +1,67 @@
+unit U_DelLote;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.ComCtrls;
+
+type
+  TfrmDelLote = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    SpeedButton1: TSpeedButton;
+    ImageList1: TImageList;
+    edtLote: TEdit;
+    SpeedButton2: TSpeedButton;
+    StringGrid1: TStringGrid;
+    ProgressBar1: TProgressBar;
+    SpeedButton3: TSpeedButton;
+    procedure SpeedButton3Click(Sender: TObject);
+  private
+    { Private declarations }
+    procedure delLote;
+    procedure limparDB;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDelLote: TfrmDelLote;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+procedure TfrmDelLote.delLote;
+begin
+if MessageDlg('Pretende realmente EXCLUIR o LOTE ' + edtLote.Text + '?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+  begin
+  QPrinc.Close;
+  QPrinc.SQL.Clear;
+  QPrinc.SQL.Add('DELETE FROM TB_BASE_DADOS ');
+  QPrinc.SQL.Add(' WHERE NUMERO_DO_LOTE =:PNUMLOTE');
+  // criamos o parametro
+  QPrinc.ParamByName('PNUMLOTE').AsString := edtLote.Text;
+  // aponta para o campo do parametro
+  //  Q_ProdPesq.SQL.Add(' WHERE 1 = 1');
+  QPrinc.ExecSQL;
+  QPrinc.Close;
+  MessageDlg('O lote '+edtLote.Text+' foi excluido com sucesso!',mtInformation,[mbOk],0);
+  end;
+end;
+
+procedure TfrmDelLote.limparDB;
+begin
+
+end;
+
+procedure TfrmDelLote.SpeedButton3Click(Sender: TObject);
+begin
+Close;
+end;
+
+end.

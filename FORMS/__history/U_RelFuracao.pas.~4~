@@ -1,0 +1,34 @@
+unit U_RelFuracao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoRel, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  frxSmartMemo, frxClass, frxDBSet, frCoreClasses, System.ImageList,
+  Vcl.ImgList, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  Tfrm_RelFuracao = class(Tfrm_PadraoRel)
+    lbl_EdtInicio: TLabel;
+    mk_inicio: TMaskEdit;
+    mk_fim: TMaskEdit;
+    lbl_EdtFinal: TLabel;
+    ImageList4: TImageList;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_RelFuracao: Tfrm_RelFuracao;
+
+implementation
+
+{$R *.dfm}
+
+end.

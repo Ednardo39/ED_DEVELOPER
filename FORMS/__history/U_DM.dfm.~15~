@@ -1,0 +1,13 @@
+object DM: TDM
+  Height = 255
+  Width = 319
+  object FDConnection1: TFDConnection
+    Left = 48
+    Top = 16
+  end
+  object FDTransaction1: TFDTransaction
+    Connection = FDConnection1
+    Left = 152
+    Top = 16
+  end
+end

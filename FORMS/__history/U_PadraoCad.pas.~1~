@@ -1,0 +1,31 @@
+unit U_PadraoCad;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  Tfrm_PadraoCad = class(TForm)
+    pnl_Cabecalho: TPanel;
+    Label1: TLabel;
+    btn_CodPrincipal: TSpeedButton;
+    Label2: TLabel;
+    btn_CodOP: TSpeedButton;
+    edt_CodPeca: TEdit;
+    edt_CodigoOP: TEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_PadraoCad: Tfrm_PadraoCad;
+
+implementation
+
+{$R *.dfm}
+
+end.

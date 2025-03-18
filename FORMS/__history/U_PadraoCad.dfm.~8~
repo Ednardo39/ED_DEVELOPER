@@ -1,0 +1,151 @@
+object frm_PadraoCad: Tfrm_PadraoCad
+  Left = 0
+  Top = 0
+  Caption = 'CADASTRO PADR'#195'O'
+  ClientHeight = 384
+  ClientWidth = 630
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object pnl_Cabecalho: TPanel
+    Left = 0
+    Top = 0
+    Width = 630
+    Height = 65
+    Align = alTop
+    BevelOuter = bvNone
+    Color = 15458266
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitWidth = 614
+    object Label1: TLabel
+      Left = 7
+      Top = 5
+      Width = 105
+      Height = 17
+      Caption = 'Informe o c'#243'digo'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Semibold'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object btn_CodPrincipal: TSpeedButton
+      Left = 179
+      Top = 24
+      Width = 113
+      Height = 29
+      Cursor = crHandPoint
+      Caption = 'BUSCAR'
+      ImageIndex = 2
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlue
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 306
+      Top = 5
+      Width = 73
+      Height = 17
+      Caption = 'Informe O.P.'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI Semibold'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object btn_CodOP: TSpeedButton
+      Left = 399
+      Top = 24
+      Width = 113
+      Height = 29
+      Cursor = crHandPoint
+      Caption = 'BUSCAR'
+      ImageIndex = 2
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlue
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object edt_CodPeca: TEdit
+      Left = 7
+      Top = 24
+      Width = 170
+      Height = 29
+      Alignment = taCenter
+      Color = clWindowText
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clYellow
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      TextHint = 'Digite o c'#243'digo..'
+    end
+    object edt_CodigoOP: TEdit
+      Left = 306
+      Top = 24
+      Width = 90
+      Height = 29
+      Alignment = taCenter
+      Color = clWindowText
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clYellow
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      TextHint = 'Cod. O.P'
+    end
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 65
+    Width = 630
+    Height = 88
+    Align = alTop
+    BorderStyle = bsNone
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+  end
+  object pnl_FundoForm: TPanel
+    Left = 0
+    Top = 153
+    Width = 630
+    Height = 200
+    Align = alTop
+    TabOrder = 2
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 288
+    Top = 112
+  end
+  object Q_Padrao: TFDQuery
+    Left = 400
+    Top = 104
+  end
+  object ds_Padrao: TDataSource
+    Left = 512
+    Top = 104
+  end
+end

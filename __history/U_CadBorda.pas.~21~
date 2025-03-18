@@ -1,0 +1,302 @@
+unit U_CadBorda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoCad, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  System.ImageList, Vcl.ImgList, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tfrm_CadBorda = class(Tfrm_PadraoCad)
+    btn_Sair: TSpeedButton;
+    StatusBar1: TStatusBar;
+    Panel1: TPanel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    lbl_Trabalho: TLabel;
+    lbl_DtTrab: TLabel;
+    lbl_Retrab: TLabel;
+    lbl_DtReTrab: TLabel;
+    pnl_Salvar: TPanel;
+    btn_Salvar: TSpeedButton;
+    Q_PadraoNUMERO_DO_LOTE: TStringField;
+    Q_PadraoNUMERO_DO_PEDIDO: TStringField;
+    Q_PadraoNUMERO_DA_ORDEM: TStringField;
+    Q_PadraoDESCRICAO_PECA: TStringField;
+    Q_PadraoID: TStringField;
+    Q_PadraoDESENHO_PROGRAMADO_1: TStringField;
+    Q_PadraoBORDA: TStringField;
+    Q_PadraoDT_TRAB_BORDA: TDateField;
+    Q_PadraoRETRAB_BORDA: TStringField;
+    Q_PadraoDT_RETRAB_BORDA: TDateField;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit5: TDBEdit;
+    DBEdit6: TDBEdit;
+    edt_Trabalho: TDBEdit;
+    edt_DtTrab: TDBEdit;
+    edt_Retrab: TDBEdit;
+    edt_DtRetrab: TDBEdit;
+    procedure btn_SairClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure edtCodPecaExit(Sender: TObject);
+    procedure edtCodPecaKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCodigoOPExit(Sender: TObject);
+    procedure edtCodigoOPKeyPress(Sender: TObject; var Key: Char);
+    procedure btn_CodPrincipalClick(Sender: TObject);
+    procedure btn_CodOPClick(Sender: TObject);
+    procedure edt_TrabalhoKeyPress(Sender: TObject; var Key: Char);
+    procedure edt_RetrabKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+    procedure buscarCodPeca;
+    procedure buscarCodOP;
+    procedure salvar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_CadBorda: Tfrm_CadBorda;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_CadBorda.btn_CodOPClick(Sender: TObject);
+begin
+  buscarCodOP;
+end;
+
+procedure Tfrm_CadBorda.btn_CodPrincipalClick(Sender: TObject);
+begin
+  buscarCodPeca;
+end;
+
+procedure Tfrm_CadBorda.btn_SairClick(Sender: TObject);
+begin
+  Close;
+
+end;
+
+procedure Tfrm_CadBorda.buscarCodOP;
+begin
+Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edtCodPeca.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND NUMERO_ORDEM = ' + QuotedStr(edtCodPeca.Text));
+      end;
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    edtCodPeca.Text  := ('');
+    edtCodigoOP.Text := ('');
+
+    if Trim(edt_Trabalho.Text) ='OK' then
+    begin
+      if MessageDlg('Peça já passou pela BORDA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_Trabalho.Visible := False;
+        lbl_Trabalho.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_Retrab.Visible := True;
+        edt_Retrab.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_Retrab.SetFocus;
+
+      end
+     { MessageDlg('Peça já USINADA!',mtInformation,[mbOk],0);
+      edtUsinagem.Enabled := False; }
+    end
+    else if Trim(edt_Trabalho.Text) ='' then
+    begin
+      edt_Trabalho.Enabled := True;
+      edt_Trabalho.SetFocus;
+    end;
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadBorda.buscarCodPeca;
+begin
+    Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edtCodPeca.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND ID = ' + QuotedStr(edtCodPeca.Text));
+      end;
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    edtCodPeca.Text  := ('');
+    edtCodigoOP.Text := ('');
+
+    if Trim(edt_Trabalho.Text) ='OK' then
+    begin
+      if MessageDlg('Peça já passou pela BORDA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_Trabalho.Visible := False;
+        lbl_Trabalho.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_Retrab.Visible := True;
+        edt_Retrab.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_Retrab.SetFocus;
+
+      end
+     { MessageDlg('Peça já USINADA!',mtInformation,[mbOk],0);
+      edtUsinagem.Enabled := False; }
+    end
+    else if Trim(edt_Trabalho.Text) ='' then
+    begin
+      edt_Trabalho.Enabled := True;
+      edt_Trabalho.SetFocus;
+    end;
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadBorda.edtCodigoOPExit(Sender: TObject);
+begin
+  if edt_Trabalho.Text = '' then
+   begin
+    edt_DtTrab.Text := DateTostr(Now);
+   end
+   else if edt_Retrab.Text = '' then
+   begin
+    edt_DtReTrab.Text := DateTostr(Now);
+   end;
+end;
+
+procedure Tfrm_CadBorda.edtCodigoOPKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    edt_DtTrab.Text := DateTostr(Now);
+    edt_Trabalho.Enabled := True;
+//    edtHrTrabalho.Text := TimeTostr(Now);
+    buscarCodOP;
+  end;
+end;
+
+procedure Tfrm_CadBorda.edtCodPecaExit(Sender: TObject);
+begin
+  if edt_Trabalho.Text = '' then
+   begin
+    edt_DtTrab.Text := DateTostr(Now);
+   end
+   else if edt_Retrab.Text = '' then
+   begin
+    edt_DtReTrab.Text := DateTostr(Now);
+   end;
+end;
+
+procedure Tfrm_CadBorda.edtCodPecaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    edt_DtTrab.Text := DateTostr(Now);
+    edt_Trabalho.Enabled := True;
+//    edtHrTrabalho.Text := TimeTostr(Now);
+    buscarCodPeca;
+  end;
+end;
+
+procedure Tfrm_CadBorda.edt_RetrabKeyPress(Sender: TObject; var Key: Char);
+begin
+  edt_DtRETrab.Text := DateTostr(Now);
+  if (key=#13) AND (edt_Retrab.Text = '') then
+  begin
+    MessageDlg('Operação invalida.',mtInformation,[mbOk],0);
+  end
+
+  //Salvando as alterações ao precionar a tecla ENTER
+  else if (key=#13) then
+  begin
+    btn_Salvar.Click;
+  end
+end;
+
+procedure Tfrm_CadBorda.edt_TrabalhoKeyPress(Sender: TObject; var Key: Char);
+begin
+  edt_DtTrab.Text := DateTostr(Now);
+  if (key=#13) AND (edt_Trabalho.Text = '') then
+  begin
+    MessageDlg('Operação invalida.',mtInformation,[mbOk],0);
+  end
+
+  //Salvando as alterações ao precionar a tecla ENTER
+  else if (key=#13) then
+  begin
+    btn_Salvar.Click;
+  end
+end;
+
+procedure Tfrm_CadBorda.salvar;
+begin
+// Salvar as alterações feitas
+  Q_Padrao.Open;
+  Q_Padrao.edit;
+  MessageDlg('Registro editado com sucesso!',mtInformation,[mbOk],0);
+  edtCodPeca.Text := '';
+  edtCodigoOP.Text := '';
+  edt_Retrab.Visible := False;
+  edt_DtRetrab.Visible := False;
+  lbl_Retrab.Visible := False;
+  lbl_DtRetrab.Visible := False;
+
+  edt_Trabalho.Visible := True;
+  edt_Dttrab.Visible := True;
+  lbl_Trabalho.Visible := True;
+  lbl_Dttrab.Visible := True;
+
+  Q_Padrao.FetchAll;
+  Q_Padrao.Close;
+end;
+
+procedure Tfrm_CadBorda.Timer1Timer(Sender: TObject);
+begin
+    //Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='BORDA';
+end;
+
+
+
+end.

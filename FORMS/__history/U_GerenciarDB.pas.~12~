@@ -1,0 +1,140 @@
+unit U_GerenciarDB;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uImportExcel, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Grids, Vcl.ComCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  Tfrm_GerenciarDB = class(TForm)
+    ImportExcel1: TImportExcel;
+    Panel1: TPanel;
+    btnImportar: TSpeedButton;
+    bntSalvar: TSpeedButton;
+    btnBancoDados: TSpeedButton;
+    Label1: TLabel;
+    pnlDelLote: TPanel;
+    btnDelLote: TSpeedButton;
+    edtLote: TEdit;
+    StringGrid1: TStringGrid;
+    OpenDialog1: TOpenDialog;
+    ProgressBar1: TProgressBar;
+    QPRINC: TFDQuery;
+    dsPRINC: TDataSource;
+    procedure btnImportarClick(Sender: TObject);
+    procedure bntSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure importar;
+    procedure salvar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_GerenciarDB: Tfrm_GerenciarDB;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+{ Tfrm_GerenciarDB }
+
+procedure Tfrm_GerenciarDB.bntSalvarClick(Sender: TObject);
+begin
+//Salvar palnilha no banco ao clicar no botão
+  salvar;
+end;
+
+procedure Tfrm_GerenciarDB.btnImportarClick(Sender: TObject);
+begin
+importar;
+end;
+
+procedure Tfrm_GerenciarDB.importar;
+var
+  vFile: string;
+begin
+  //Processo para importar os dados de planilhas excel
+  if OpenDialog1.Execute then
+  begin
+    vFile := OpenDialog1.FileName;
+    importExcel1.ExcelFile := vFile;
+    ImportExcel1.ExcelParaStringGrid(StringGrid1, ProgressBar1);
+  end;
+
+end;
+
+procedure Tfrm_GerenciarDB.salvar;
+var
+  I : Integer;
+  F: Integer;
+begin
+ { QPrinc.Open;
+  ProgressBar1.Max := StringGrid1.RowCount;
+  ProgressBar1.Position := 0;
+//  cdsArquivos.DisableControls; //Desabilita o acompanhamentoda tabela ao carregar
+  for I := 1 to Pred(StringGrid1.RowCount) do
+    begin
+      Application.ProcessMessages;
+      ProgressBar1.Position := ProgressBar1.Position +1;
+//      cdsArquivos.Insert;
+
+      QPrinc.Insert;
+      QPrincCOD_CLIENTE.AsString := StringGrid1.Cells[0, I];//Coluna '0' e linha 'I'
+      QPrincRAZAO_SOCIAL_CLIENTE.AsString := StringGrid1.Cells[1, I];//Coluna '1' e linha 'I'
+      QPrincORDEM_COMPRA_PEDIDO.AsString := StringGrid1.Cells[2, I];//Coluna '2' e linha 'I'
+      QPrincNOME_PLANEJADOR.AsString := StringGrid1.Cells[3, I];//Coluna '3' e linha 'I'
+      QPrincQUANTIDADE.AsString := StringGrid1.Cells[4, I];//Coluna '4' e linha 'I'
+      QPrincALTURA_PECA.AsString := StringGrid1.Cells[5, I];//Coluna '5' e linha 'I'
+      QPrincLARGURA_PECA.AsString := StringGrid1.Cells[6, I];//Coluna '6' e linha 'I'
+      QPrincESPESSURA_PECA.AsString := StringGrid1.Cells[7, I];//Coluna '7' e linha 'I'
+      QPrincCODIGO_MATERIAL.AsString := StringGrid1.Cells[8, I];//Coluna '8' e linha 'I'
+      QPrincDESCRICAO_MATERIAL.AsString := StringGrid1.Cells[9, I];//Coluna '9' e linha 'I'
+      QPrincLARGURA_CORTE_MATERIAL.AsString := StringGrid1.Cells[10, I];//Coluna '10' e linha 'I'
+      QPrincALTURA_CORTE_MATERIAL.AsString := StringGrid1.Cells[11, I];//Coluna '11' e linha 'I'
+      QPrincIMAGEM_MATERIAL.AsString := StringGrid1.Cells[12, I];//Coluna '12' e linha 'I'
+      QPrincCODIGO_PECA.AsString := StringGrid1.Cells[13, I];//Coluna '13' e linha 'I'
+      QPrincCOMPLEMENTO.AsString := StringGrid1.Cells[14, I];//Coluna '14' e linha 'I'
+      QPrincDESCRICAO_PECA.AsString := StringGrid1.Cells[15, I];//Coluna '15' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_1.AsString := StringGrid1.Cells[16, I];//Coluna '16' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_2.AsString := StringGrid1.Cells[17, I];//Coluna '17' e linha 'I'
+      QPrincDESENHO_PROGRAMADO_3.AsString := StringGrid1.Cells[18, I];//Coluna '18 e linha 'I'
+      QPrincVEIO_MATERIAL.AsString := StringGrid1.Cells[19, I];//Coluna '19' e linha 'I'
+      QPrincBORDA_SUPERIOR.AsString := StringGrid1.Cells[20, I];//Coluna '20' e linha 'I'
+      QPrincBORDA_INFERIOR.AsString := StringGrid1.Cells[21, I];//Coluna '21' e linha 'I'
+      QPrincBORDA_ESQUERDA.AsString := StringGrid1.Cells[22, I];//Coluna '22' e linha 'I'
+      QPrincBORDA_DIREITA.AsString := StringGrid1.Cells[23, I];//Coluna '23' e linha 'I'
+      QPrincDESTINO_IMPRESSAO.AsString := StringGrid1.Cells[24, I];//Coluna '24' e linha 'I'
+      QPrincID.AsString := StringGrid1.Cells[25, I];//Coluna '25' e linha 'I'
+      QPrincPOSTO_OPERACIONAL.AsString := StringGrid1.Cells[26, I];//Coluna '26' e linha 'I'
+      QPrincNUMERO_DO_LOTE.AsString := StringGrid1.Cells[27, I];//Coluna '27' e linha 'I'
+      QPrincNUMERO_DO_PEDIDO.AsString := StringGrid1.Cells[28, I];//Coluna '28' e linha 'I'
+      QPrincNUMERO_DO_BOX.AsString := StringGrid1.Cells[29, I];//Coluna '29' e linha 'I'
+      QPrincNUMERO_DA_ORDEM.AsString := StringGrid1.Cells[30, I];//Coluna '30' e linha 'I'
+      QPrincDATA_ENTREGA_LOTE.AsString := StringGrid1.Cells[31, I];//Coluna '31' e linha 'I'
+      QPrincID_PROMOB.AsString := StringGrid1.Cells[32, I];//Coluna '32' e linha 'I'
+      QPrincLOGO.AsString := StringGrid1.Cells[33, I];//Coluna '33' e linha 'I'
+      QPrincSTATUS.AsString := StringGrid1.Cells[34, I];//Coluna '34' e linha 'I'
+      QPrincCORTE.AsString := StringGrid1.Cells[35, I];//Coluna '35' e linha 'I'
+      QPrincUSINAGEM.AsString := StringGrid1.Cells[36, I];//Coluna '36' e linha 'I'
+      QPrincRETRABALHO.AsString := StringGrid1.Cells[37, I];//Coluna '37' e linha 'I'
+      QPrincDT_TRABALHO.AsString := StringGrid1.Cells[38, I];//Coluna '38' e linha 'I'
+
+//      cdsArquivos.Post;
+      QPrinc.Post;;
+
+    end;
+//    cdsArquivos.EnableConstraints; //Atualiza a tabela no final
+    ShowMessage('CONCLUIDO.'); }
+
+end;
+
+end.

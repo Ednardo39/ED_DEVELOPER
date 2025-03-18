@@ -1,0 +1,275 @@
+object frm_GestaoDB: Tfrm_GestaoDB
+  Left = 0
+  Top = 0
+  Align = alClient
+  BorderStyle = bsNone
+  Caption = 'frm_GestaoDB'
+  ClientHeight = 379
+  ClientWidth = 654
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  WindowState = wsMaximized
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 654
+    Height = 57
+    Align = alTop
+    BevelOuter = bvNone
+    Color = 15458266
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitWidth = 853
+    object btnImportar: TSpeedButton
+      Left = 160
+      Top = 0
+      Width = 161
+      Height = 57
+      Caption = ' IMPORTAR'
+      ImageIndex = 0
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = 4294370
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = btnImportarClick
+    end
+    object bntSalvar: TSpeedButton
+      Left = 321
+      Top = 0
+      Width = 161
+      Height = 57
+      Caption = 'SALVAR'
+      ImageIndex = 2
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clNavy
+      Font.Height = -16
+      Font.Name = 'Segoe UI Black'
+      Font.Style = [fsBold]
+      ParentFont = False
+      OnClick = bntSalvarClick
+    end
+  end
+  object ProgressBar1: TProgressBar
+    Left = 0
+    Top = 362
+    Width = 654
+    Height = 17
+    Align = alBottom
+    TabOrder = 1
+    ExplicitTop = 359
+    ExplicitWidth = 853
+  end
+  object StringGrid1: TStringGrid
+    Left = 0
+    Top = 57
+    Width = 654
+    Height = 305
+    Align = alClient
+    TabOrder = 2
+    ExplicitLeft = 8
+    ExplicitWidth = 881
+    ExplicitHeight = 443
+  end
+  object ImportExcel1: TImportExcel
+    Left = 208
+    Top = 264
+  end
+  object QPRINC: TFDQuery
+    Connection = DM.Conexao
+    SQL.Strings = (
+      'SELECT * FROM TB_BASE_DADOS'
+      'ORDER BY ID')
+    Left = 208
+    Top = 208
+    object QPRINCCOD_CLIENTE: TStringField
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+      Size = 10
+    end
+    object QPRINCRAZAO_SOCIAL_CLIENTE: TStringField
+      FieldName = 'RAZAO_SOCIAL_CLIENTE'
+      Origin = 'RAZAO_SOCIAL_CLIENTE'
+      Size = 50
+    end
+    object QPRINCORDEM_COMPRA_PEDIDO: TStringField
+      FieldName = 'ORDEM_COMPRA_PEDIDO'
+      Origin = 'ORDEM_COMPRA_PEDIDO'
+      Size = 50
+    end
+    object QPRINCNOME_PLANEJADOR: TStringField
+      FieldName = 'NOME_PLANEJADOR'
+      Origin = 'NOME_PLANEJADOR'
+      Size = 30
+    end
+    object QPRINCQUANTIDADE: TStringField
+      FieldName = 'QUANTIDADE'
+      Origin = 'QUANTIDADE'
+      Size = 5
+    end
+    object QPRINCALTURA_PECA: TStringField
+      FieldName = 'ALTURA_PECA'
+      Origin = 'ALTURA_PECA'
+      Size = 10
+    end
+    object QPRINCLARGURA_PECA: TStringField
+      FieldName = 'LARGURA_PECA'
+      Origin = 'LARGURA_PECA'
+      Size = 10
+    end
+    object QPRINCESPESSURA_PECA: TStringField
+      FieldName = 'ESPESSURA_PECA'
+      Origin = 'ESPESSURA_PECA'
+      Size = 5
+    end
+    object QPRINCCODIGO_MATERIAL: TStringField
+      FieldName = 'CODIGO_MATERIAL'
+      Origin = 'CODIGO_MATERIAL'
+      Size = 15
+    end
+    object QPRINCDESCRICAO_MATERIAL: TStringField
+      FieldName = 'DESCRICAO_MATERIAL'
+      Origin = 'DESCRICAO_MATERIAL'
+      Size = 100
+    end
+    object QPRINCLARGURA_CORTE_MATERIAL: TStringField
+      FieldName = 'LARGURA_CORTE_MATERIAL'
+      Origin = 'LARGURA_CORTE_MATERIAL'
+      Size = 3
+    end
+    object QPRINCALTURA_CORTE_MATERIAL: TStringField
+      FieldName = 'ALTURA_CORTE_MATERIAL'
+      Origin = 'ALTURA_CORTE_MATERIAL'
+      Size = 3
+    end
+    object QPRINCIMAGEM_MATERIAL: TStringField
+      FieldName = 'IMAGEM_MATERIAL'
+      Origin = 'IMAGEM_MATERIAL'
+      Size = 2
+    end
+    object QPRINCCODIGO_PECA: TStringField
+      FieldName = 'CODIGO_PECA'
+      Origin = 'CODIGO_PECA'
+    end
+    object QPRINCCOMPLEMENTO: TStringField
+      FieldName = 'COMPLEMENTO'
+      Origin = 'COMPLEMENTO'
+      Size = 10
+    end
+    object QPRINCDESCRICAO_PECA: TStringField
+      FieldName = 'DESCRICAO_PECA'
+      Origin = 'DESCRICAO_PECA'
+      Size = 150
+    end
+    object QPRINCDESENHO_PROGRAMADO_1: TStringField
+      FieldName = 'DESENHO_PROGRAMADO_1'
+      Origin = 'DESENHO_PROGRAMADO_1'
+      Size = 15
+    end
+    object QPRINCDESENHO_PROGRAMADO_2: TStringField
+      FieldName = 'DESENHO_PROGRAMADO_2'
+      Origin = 'DESENHO_PROGRAMADO_2'
+      Size = 15
+    end
+    object QPRINCDESENHO_PROGRAMADO_3: TStringField
+      FieldName = 'DESENHO_PROGRAMADO_3'
+      Origin = 'DESENHO_PROGRAMADO_3'
+      Size = 15
+    end
+    object QPRINCVEIO_MATERIAL: TStringField
+      FieldName = 'VEIO_MATERIAL'
+      Origin = 'VEIO_MATERIAL'
+      Size = 2
+    end
+    object QPRINCBORDA_SUPERIOR: TStringField
+      FieldName = 'BORDA_SUPERIOR'
+      Origin = 'BORDA_SUPERIOR'
+    end
+    object QPRINCBORDA_INFERIOR: TStringField
+      FieldName = 'BORDA_INFERIOR'
+      Origin = 'BORDA_INFERIOR'
+    end
+    object QPRINCBORDA_ESQUERDA: TStringField
+      FieldName = 'BORDA_ESQUERDA'
+      Origin = 'BORDA_ESQUERDA'
+    end
+    object QPRINCBORDA_DIREITA: TStringField
+      FieldName = 'BORDA_DIREITA'
+      Origin = 'BORDA_DIREITA'
+    end
+    object QPRINCDESTINO_IMPRESSAO: TStringField
+      FieldName = 'DESTINO_IMPRESSAO'
+      Origin = 'DESTINO_IMPRESSAO'
+      Size = 100
+    end
+    object QPRINCID: TStringField
+      FieldName = 'ID'
+      Origin = 'ID'
+      Size = 10
+    end
+    object QPRINCPOSTO_OPERACIONAL: TStringField
+      FieldName = 'POSTO_OPERACIONAL'
+      Origin = 'POSTO_OPERACIONAL'
+      Size = 50
+    end
+    object QPRINCNUMERO_DO_LOTE: TStringField
+      FieldName = 'NUMERO_DO_LOTE'
+      Origin = 'NUMERO_DO_LOTE'
+      Size = 10
+    end
+    object QPRINCNUMERO_DO_PEDIDO: TStringField
+      FieldName = 'NUMERO_DO_PEDIDO'
+      Origin = 'NUMERO_DO_PEDIDO'
+      Size = 10
+    end
+    object QPRINCNUMERO_DO_BOX: TStringField
+      FieldName = 'NUMERO_DO_BOX'
+      Origin = 'NUMERO_DO_BOX'
+      Size = 2
+    end
+    object QPRINCNUMERO_DA_ORDEM: TStringField
+      FieldName = 'NUMERO_DA_ORDEM'
+      Origin = 'NUMERO_DA_ORDEM'
+      Size = 10
+    end
+    object QPRINCDATA_ENTREGA_LOTE: TStringField
+      FieldName = 'DATA_ENTREGA_LOTE'
+      Origin = 'DATA_ENTREGA_LOTE'
+      Size = 10
+    end
+    object QPRINCID_PROMOB: TStringField
+      FieldName = 'ID_PROMOB'
+      Origin = 'ID_PROMOB'
+      Size = 10
+    end
+    object QPRINCLOGO: TStringField
+      FieldName = 'LOGO'
+      Origin = 'LOGO'
+      Size = 10
+    end
+  end
+  object dsPRINC: TDataSource
+    DataSet = QPRINC
+    Left = 400
+    Top = 184
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 248
+    Top = 112
+  end
+  object ImageList1: TImageList
+    ColorDepth = cd32Bit
+    Height = 60
+    Width = 60
+    Left = 64
+    Top = 200
+  end
+end

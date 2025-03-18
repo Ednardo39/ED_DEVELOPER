@@ -1,0 +1,212 @@
+unit U_CadUsinagens;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoCadastro, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  System.ImageList, Vcl.ImgList, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls, Vcl.ComCtrls;
+
+type
+  Tfrm_CadUsinagens = class(Tfrm_PadraoCadastro)
+    Q_PadraoNUMERO_DO_LOTE: TStringField;
+    Q_PadraoNUMERO_DO_PEDIDO: TStringField;
+    Q_PadraoNUMERO_DA_ORDEM: TStringField;
+    Q_PadraoDESCRICAO_PECA: TStringField;
+    Q_PadraoID: TStringField;
+    Q_PadraoDESENHO_PROGRAMADO_1: TStringField;
+    Q_PadraoUSINAGEM: TStringField;
+    Q_PadraoDT_TRAB_USI: TDateField;
+    Q_PadraoDT_RETRAB_USI: TDateField;
+    Panel2: TPanel;
+    Label3: TLabel;
+    DBEdit1: TDBEdit;
+    Label4: TLabel;
+    DBEdit2: TDBEdit;
+    Label5: TLabel;
+    DBEdit3: TDBEdit;
+    Label6: TLabel;
+    DBEdit4: TDBEdit;
+    Label7: TLabel;
+    DBEdit5: TDBEdit;
+    Label8: TLabel;
+    DBEdit6: TDBEdit;
+    lbl_StatusTrab: TLabel;
+    edt_StatusTrab: TDBEdit;
+    lbl_DtTrab: TLabel;
+    edt_DtTrab: TDBEdit;
+    lbl_DtReTrab: TLabel;
+    edt_DtReTrab: TDBEdit;
+    pnl_Salvar: TPanel;
+    btn_Salvar: TSpeedButton;
+    Q_PadraoRETRAB_USI: TStringField;
+    lbl_StatusRetrabUsi: TLabel;
+    edt_StatusRetrabUsi: TDBEdit;
+    Timer1: TTimer;
+    StatusBar1: TStatusBar;
+    procedure btn_CodPrincipalClick(Sender: TObject);
+    procedure edt_CodPecaExit(Sender: TObject);
+    procedure edt_CodPecaKeyPress(Sender: TObject; var Key: Char);
+    procedure edt_CodigoOPKeyPress(Sender: TObject; var Key: Char);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btn_CodOPClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure buscarCodPeca;
+    procedure buscarCodOP;
+    procedure acaoAposClique;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_CadUsinagens: Tfrm_CadUsinagens;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_CadUsinagens.buscarCodOP;
+begin
+  Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edt_CodigoOP.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND NUMERO_DA_ORDEM = ' + QuotedStr(edt_CodigoOP.Text));
+        edt_CodigoOP.Text := (' ');
+      end;
+
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    edt_CodPeca.Text := ('');
+    edt_CodigoOP.Text := ('');
+
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadUsinagens.buscarCodPeca;
+begin
+    Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edt_CodPeca.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND ID = ' + QuotedStr(edt_CodPeca.Text));
+      end;
+
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    acaoAposClique;
+
+    if Trim(edt_StatusTrab.Text) ='OK' then
+    begin
+     if MessageDlg('Peça já USINADA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_StatusTrab.Visible := False;
+        lbl_StatusTrab.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_StatusRetrabUsi.Visible := True;
+        edt_StatusRetrabUsi.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_StatusRetrabUsi.SetFocus;
+
+      end
+    end;
+
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+        edt_CodPeca.SetFocus;
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadUsinagens.edt_CodigoOPKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key=#13 then
+  begin
+    buscarCodOP;
+    acaoAposClique;
+  end;
+end;
+
+procedure Tfrm_CadUsinagens.edt_CodPecaExit(Sender: TObject);
+begin
+//  edtDtTrab.Text := DateTostr(Now);
+end;
+
+procedure Tfrm_CadUsinagens.edt_CodPecaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    buscarCodPeca;
+  end;
+end;
+
+procedure Tfrm_CadUsinagens.FormShow(Sender: TObject);
+begin
+  edt_CodPeca.SetFocus;
+end;
+
+procedure Tfrm_CadUsinagens.Timer1Timer(Sender: TObject);
+begin
+  //Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='USINAGEM';
+end;
+
+procedure Tfrm_CadUsinagens.acaoAposClique;
+begin
+
+    edt_CodPeca.Text  := ('');
+    edt_CodigoOP.Text := ('');
+    {edt_StatusTrab.Visible := True;
+    lbl_StatusTrab.Visible := True;
+    edt_StatusTrab.Visible := True;
+    edt_DtTrab.Visible := True;
+    lbl_DtTrab.Visible := True;
+    lbl_StatusRetrabUsi.Visible := False;
+    edt_StatusRetrabUsi.Visible := False;
+    edt_DtReTrab.Visible := False;
+    lbl_DtReTrab.Visible := False;
+    edt_StatusTrab.SetFocus;}
+end;
+
+procedure Tfrm_CadUsinagens.btn_CodOPClick(Sender: TObject);
+begin
+//  buscarCodOP;
+//  acaoAposClique;
+end;
+
+procedure Tfrm_CadUsinagens.btn_CodPrincipalClick(Sender: TObject);
+begin
+  buscarCodPeca;
+end;
+
+end.

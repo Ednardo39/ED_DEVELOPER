@@ -1,0 +1,35 @@
+object DM: TDM
+  Height = 247
+  Width = 264
+  object DM_CONNECT: TFDConnection
+    Params.Strings = (
+      'Database=C:\ED_DEVELOPER\EXE\DB\BASE_DB.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Protocol=TCPIP'
+      'Server=localhost'
+      'Port=3050'
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
+    Left = 32
+    Top = 16
+  end
+  object FDTransaction1: TFDTransaction
+    Connection = DM_CONNECT
+    Left = 128
+    Top = 16
+  end
+  object FDPhysFBDriverLink1: TFDPhysFBDriverLink
+    Left = 48
+    Top = 80
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 168
+    Top = 80
+  end
+  object FDMoniRemoteClientLink1: TFDMoniRemoteClientLink
+    Left = 64
+    Top = 152
+  end
+end

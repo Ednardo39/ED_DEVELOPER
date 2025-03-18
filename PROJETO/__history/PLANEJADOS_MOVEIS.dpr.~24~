@@ -1,0 +1,21 @@
+program PLANEJADOS_MOVEIS;
+
+uses
+  Vcl.Forms,
+  U_TelaPrincipal in '..\FORMS\U_TelaPrincipal.pas' {frm_TelaPrincipal},
+  Vcl.Navigation in '..\Utils\Vcl.Navigation.pas',
+  U_PadraoCadastro in '..\FORMS\U_PadraoCadastro.pas' {frm_PadraoCadastro},
+  U_CadUsinagens in '..\FORMS\U_CadUsinagens.pas' {frm_CadUsinagens},
+  U_DM in '..\FORMS\U_DM.pas' {DM: TDataModule},
+  U_CadCorte in '..\FORMS\U_CadCorte.pas' {frm_CadCorte},
+  U_CadCaixaria in '..\FORMS\U_CadCaixaria.pas' {frm_CadCaixaria};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(Tfrm_TelaPrincipal, frm_TelaPrincipal);
+  Application.Run;
+end.
