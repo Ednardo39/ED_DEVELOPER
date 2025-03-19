@@ -1005,7 +1005,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   end
   inherited REL_pesq_padrao: TfrxReport
     ReportOptions.CreateDate = 45728.474760011600000000
-    ReportOptions.LastChange = 45734.339627523100000000
+    ReportOptions.LastChange = 45734.919905868050000000
     Datasets = <
       item
         DataSet = DatSET_pesq_padrao
@@ -1040,7 +1040,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
         object Memo1: TfrxMemoView
           Align = baWidth
           AllowVectorExport = True
-          Top = 3.779530000000000000
+          Top = 7.559060000000000000
           Width = 718.110717773437500000
           Height = 34.015771670000000000
           ContentScaleOptions.Constraints.MaxIterationValue = 0
@@ -1096,41 +1096,33 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
             '[Page#]')
           ParentFont = False
         end
-        object Memo11: TfrxMemoView
+        object Picture1: TfrxPictureView
           AllowVectorExport = True
-          Left = 7.559059670000000000
-          Top = 6.779530390000000000
-          Width = 79.370133590000000000
-          Height = 26.456707860000000000
-          ContentScaleOptions.Constraints.MaxIterationValue = 0
-          ContentScaleOptions.Constraints.MinIterationValue = 0
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -21
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Mowig')
-          ParentFont = False
-        end
-        object Memo12: TfrxMemoView
-          AllowVectorExport = True
-          Left = 37.795298670000000000
-          Top = -4.999999180000000000
-          Width = 34.091343460000000000
+          Left = 15.118119020000000000
+          Top = 3.779530820000000000
+          Width = 34.015770730000000000
           Height = 30.236237860000000000
-          ContentScaleOptions.Constraints.MaxIterationValue = 0
-          ContentScaleOptions.Constraints.MinIterationValue = 0
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -16
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
           Frame.Typ = []
-          Memo.UTF8W = (
-            '__')
-          ParentFont = False
+          Picture.Data = {
+            0954506E67496D61676589504E470D0A1A0A0000000D49484452000000200000
+            0020080300000044A48AC600000036504C544547704C1010100D0E0E0D0D0D14
+            14140C0D0D0E0F0F191A1A121313090A0A0506062020202324240E0E0E151616
+            303131535454111111A88356240000001274524E5300C3CBD486FCF0599BFFFF
+            3926E1711709B26E404AE4000001224944415478DAD593C97683300C452DDBC1
+            E69066F8FF8F6C52D282E768A0D0D3455974D3B2F011F295DEB30CA0761EF817
+            00FC8C34D07BC0AE845D359A0ECA170BAA95A886C8E9D6E098B5EC1B80BB3A1C
+            38D68F4B7D78DC4F1E3967A4D7BB52E7247009B8F440396A2465947426377A89
+            59A94B801C650E57E239E9B5BBF518BB576E5C67014463AEE8C3D98F8EFC8C04
+            B32A01A2DC2692D5C92C716753FA1CF54B11EB436BD3B1527CB863150909E0B5
+            B83CE550C83C1DE994E52C0C0C8DD63A5F03DA320E63FB067D73B7F536B9CA8C
+            9DC5226E57E71EE6BA5DB7F6E4CC45D496334D43C52E1B808264C2D064D8A599
+            3A825740AC07C7BE492FF942B3D8BEA8E592B82BB9C4CF20E6AF804C9B47B71C
+            5AE215183A143C8FF97BFC47FE8B5F034FD70A7634126C95040000000049454E
+            44AE426082}
+          Stretched = False
+          HightQuality = False
+          Transparent = False
+          TransparentColor = clWhite
         end
       end
       object MasterData1: TfrxMasterData

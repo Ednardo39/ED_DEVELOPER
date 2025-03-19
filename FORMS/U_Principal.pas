@@ -11,9 +11,6 @@ uses
 type
   Tfrm_Principal = class(TForm)
     sMenu: TSplitView;
-    Panel1: TPanel;
-    btnMenu: TSpeedButton;
-    Image1: TImage;
     CategoryMenuButtons: TCategoryButtons;
     SplitView1: TSplitView;
     Panel4: TPanel;
@@ -45,6 +42,10 @@ type
     Label4: TLabel;
     CategoryButtons4: TCategoryButtons;
     ImageList1: TImageList;
+    ImageList2: TImageList;
+    Panel9: TPanel;
+    btnMenu: TSpeedButton;
+    Image1: TImage;
     procedure btnMenuClick(Sender: TObject);
     procedure CategoryMenuButtonsCategories0Items0Click(Sender: TObject);
     procedure CategoryMenuButtonsCategories0Items1Click(Sender: TObject);
