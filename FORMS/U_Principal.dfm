@@ -88,7 +88,6 @@ object frm_Principal: Tfrm_Principal
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitTop = 8
       object btnMenu: TSpeedButton
         Left = 0
         Top = 0
@@ -867,7 +866,7 @@ object frm_Principal: Tfrm_Principal
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 94
+        Width = 143
         Height = 49
         Align = alClient
         Alignment = taCenter
@@ -883,6 +882,7 @@ object frm_Principal: Tfrm_Principal
         ParentColor = False
         ParentFont = False
         Layout = tlCenter
+        ExplicitWidth = 94
         ExplicitHeight = 25
       end
     end

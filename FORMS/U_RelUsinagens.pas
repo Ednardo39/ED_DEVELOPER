@@ -271,12 +271,12 @@ var
 begin
     // ABRE RELATÓRIO
   caminho := ExtractFilepath(Application.ExeName);
-  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens.fr3')
+  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens2.fr3')
   then
   begin
     REL_pesq_padrao.clear; // limpa relatorio
     REL_pesq_padrao.LoadFromFile(ExtractFilepath(Application.ExeName) +
-      'RelUsinagens.fr3');
+      'RelUsinagens2.fr3');
     REL_pesq_padrao.PrepareReport(true);
     REL_pesq_padrao.ShowPreparedReport;
   end

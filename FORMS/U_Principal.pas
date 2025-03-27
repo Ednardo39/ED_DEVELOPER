@@ -148,6 +148,8 @@ begin
 //Chamar tela de relatório corte
   TNavigation.Open(Tfrm_RelCorte, frm_RelCorte, pnl_Container);
   sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+//  sSubMenuRelatorios :=nil;
+
 end;
 
 procedure Tfrm_Principal.CategoryButtons4Categories0Items3Click(
@@ -156,6 +158,7 @@ begin
 //Chamar tela de relatório furação
   TNavigation.Open(Tfrm_RelFuracao, frm_RelFuracao, pnl_Container);
   sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+//  sSubMenuRelatorios :=nil;
 end;
 
 procedure Tfrm_Principal.CategoryButtons4Categories0Items4Click(
@@ -164,6 +167,7 @@ begin
 //Chamar tela de relatório usinagem
   TNavigation.Open(Tfrm_RelUsinagens, frm_RelUsinagens, pnl_Container);
   sSubMenuRelatorios.Opened := False; //Fecha subMenuProdução
+
 end;
 
 procedure Tfrm_Principal.CategoryButtons4Categories0Items5Click(

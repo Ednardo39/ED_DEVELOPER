@@ -1005,7 +1005,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   end
   inherited REL_pesq_padrao: TfrxReport
     ReportOptions.CreateDate = 45728.474760011600000000
-    ReportOptions.LastChange = 45734.919905868050000000
+    ReportOptions.LastChange = 45742.802690578700000000
     Datasets = <
       item
         DataSet = DatSET_pesq_padrao
@@ -1482,43 +1482,82 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
         FillGap.Bottom = 0
         FillGap.Right = 0
         Frame.Typ = []
-        Height = 22.677180000000000000
+        Height = 34.015770000000000000
         Top = 204.094620000000000000
         Width = 718.110700000000000000
         object Memo10: TfrxMemoView
           AllowVectorExport = True
-          Left = 248.008037870000000000
-          Top = 3.000000000000000000
-          Width = 170.078850730000000000
+          Left = 2.338587870000000000
+          Top = 14.000000000000000000
+          Width = 143.622017950000000000
           Height = 18.897659300000000000
           ContentScaleOptions.Constraints.MaxIterationValue = 0
           ContentScaleOptions.Constraints.MinIterationValue = 0
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clGray
-          Font.Height = -16
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'Qtd.pe'#231'as usinadas:')
+            'Qtd. pe'#231'as usinadas:')
           ParentFont = False
         end
         object SysMemo1: TfrxSysMemoView
           AllowVectorExport = True
-          Left = 434.866406120000000000
-          Top = 3.000000000000000000
-          Width = 83.149660730000000000
+          Left = 146.181186120000000000
+          Top = 14.000000000000000000
+          Width = 34.015770730000000000
+          Height = 18.897659300000000000
+          ContentScaleOptions.Constraints.MaxIterationValue = 0
+          ContentScaleOptions.Constraints.MinIterationValue = 0
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -13
+          Font.Name = 'Arial Narrow'
+          Font.Style = [fsBold, fsItalic]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[COUNT(MasterData1)]')
+          ParentFont = False
+        end
+        object MemoCOUNT: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 338.055350000000000000
+          Top = 13.984251970000000000
+          Width = 34.015770000000000000
+          Height = 18.897650000000000000
+          ContentScaleOptions.Constraints.MaxIterationValue = 0
+          ContentScaleOptions.Constraints.MinIterationValue = 0
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -13
+          Font.Name = 'Arial Narrow'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[COUNT(MasterData1)]')
+          ParentFont = False
+        end
+        object Memo11: TfrxMemoView
+          AllowVectorExport = True
+          Left = 190.551330000000000000
+          Top = 14.000000000000000000
+          Width = 147.401547950000000000
           Height = 18.897659300000000000
           ContentScaleOptions.Constraints.MaxIterationValue = 0
           ContentScaleOptions.Constraints.MinIterationValue = 0
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clRed
-          Font.Height = -16
+          Font.Color = clGray
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          Frame.Typ = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[COUNT(MasterData1)]')
+            'Qtd. pe'#231'as retrabalho:')
           ParentFont = False
         end
       end
