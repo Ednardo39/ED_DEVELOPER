@@ -866,7 +866,7 @@ object frm_Principal: Tfrm_Principal
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 143
+        Width = 94
         Height = 49
         Align = alClient
         Alignment = taCenter
@@ -882,7 +882,6 @@ object frm_Principal: Tfrm_Principal
         ParentColor = False
         ParentFont = False
         Layout = tlCenter
-        ExplicitWidth = 94
         ExplicitHeight = 25
       end
     end

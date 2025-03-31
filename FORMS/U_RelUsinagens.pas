@@ -41,6 +41,8 @@ type
     procedure bt_ImprimirClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btn_SairClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure pesq_peca;
@@ -104,6 +106,7 @@ begin
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
         lb_nome.Caption := 'Peças usinadas';
+        ed_nome.Text := 'OK';
       end;
 
     4:
@@ -158,6 +161,13 @@ begin
       canvas.FillRect(Rect);
       DefaultDrawColumnCell( Rect, DataCol, Column, State);
     end;
+end;
+
+procedure Tfrm_RelUsinagens.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  frm_RelUsinagens := nil;
+//  frm_RelUsinagens := Freeandnil;
 end;
 
 procedure Tfrm_RelUsinagens.FormShow(Sender: TObject);
@@ -265,14 +275,20 @@ begin
     end;
 end;
 
+procedure Tfrm_RelUsinagens.btn_SairClick(Sender: TObject);
+begin
+  inherited;
+  frm_RelUsinagens.Free;
+  frm_RelUsinagens := nil;
+end;
+
 procedure Tfrm_RelUsinagens.bt_ImprimirClick(Sender: TObject);
 var
   caminho: string;
 begin
-    // ABRE RELATÓRIO
+   // ABRE RELATÓRIO
   caminho := ExtractFilepath(Application.ExeName);
-  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens2.fr3')
-  then
+  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens2.fr3')then
   begin
     REL_pesq_padrao.clear; // limpa relatorio
     REL_pesq_padrao.LoadFromFile(ExtractFilepath(Application.ExeName) +

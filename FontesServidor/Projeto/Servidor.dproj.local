@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025/03/21 17:42:13.000.637,=C:\Users\Ednardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/03/30 00:05:09.521,=C:\Users\Ednardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/03/30 00:06:38.959,C:\ED_DEVELOPER\FontesServidor\U_Principal.pas=C:\Users\Ednardo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/03/30 00:06:38.959,C:\ED_DEVELOPER\FontesServidor\U_Principal.dfm=C:\Users\Ednardo\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025/03/30 00:07:25.597,C:\ED_DEVELOPER\FontesServidor\Projeto\Servidor.dproj=C:\Users\Ednardo\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2025/03/30 01:19:28.078,=C:\ED_DEVELOPER\FontesServidor\Projeto\Unit1.pas</Transaction>
+    <Transaction>2025/03/30 01:20:53.377,C:\ED_DEVELOPER\FontesServidor\Controllers\Controllers.Cliente.pas=C:\ED_DEVELOPER\FontesServidor\Projeto\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

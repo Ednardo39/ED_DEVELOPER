@@ -1,0 +1,309 @@
+unit U_RelUsinagens;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoRel, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  frxSmartMemo, System.ImageList, Vcl.ImgList, frxClass, frxDBSet,
+  frCoreClasses, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids,
+  Vcl.Imaging.jpeg, Vcl.Mask;
+
+type
+  Tfrm_RelUsinagens = class(Tfrm_PadraoRel)
+    Timer1: TTimer;
+    StatusBar1: TStatusBar;
+    DBGrid1: TDBGrid;
+    ImageList48: TImageList;
+    Q_pesq_padraoNUMERO_DO_LOTE: TStringField;
+    Q_pesq_padraoNUMERO_DO_PEDIDO: TStringField;
+    Q_pesq_padraoNUMERO_DA_ORDEM: TStringField;
+    Q_pesq_padraoDESCRICAO_PECA: TStringField;
+    Q_pesq_padraoID: TStringField;
+    Q_pesq_padraoDESENHO_PROGRAMADO_1: TStringField;
+    Q_pesq_padraoUSINAGEM: TStringField;
+    Q_pesq_padraoDT_TRABALHO: TDateField;
+    Q_pesq_padraoRETRAB_USI: TStringField;
+    Q_pesq_padraoDT_RETRAB_USI: TDateField;
+    lb_Resultado: TLabel;
+    mk_inicio: TMaskEdit;
+    lbl_EdtFinal: TLabel;
+    mk_fim: TMaskEdit;
+    lbl_EdtInicio: TLabel;
+    procedure cb_chave_pesquisaChange(Sender: TObject);
+    procedure ed_nomeKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure bt_PesquisaClick(Sender: TObject);
+    procedure bt_ImprimirClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btn_SairClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+    procedure pesq_peca;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_RelUsinagens: Tfrm_RelUsinagens;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_RelUsinagens.cb_chave_pesquisaChange(Sender: TObject);
+begin
+  case cb_chave_pesquisa.ItemIndex of
+    0:
+      begin // pesquisa pelo CODÍGO GERAL
+        ed_nome.Visible := true;
+        ed_nome.SetFocus;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := false;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        lb_nome.Caption := 'Código geral';
+      end;
+
+   1:
+      begin // pesquisa pelo CODÍGO O.P
+        ed_nome.Visible := true;
+        ed_nome.SetFocus;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := false;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        lb_nome.Caption := 'Código O.P';
+      end;
+
+   2:
+      begin // pesquisa pelo CODÍGO DE USINAGEM
+        ed_nome.Visible := true;
+        ed_nome.SetFocus;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := false;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        lb_nome.Caption := 'Código de usinagem';
+      end;
+
+    3:
+      begin // pesquisa todas as peças trabalhadas
+        ed_nome.Visible := true;
+        ed_nome.SetFocus;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := false;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        lb_nome.Caption := 'Peças usinadas';
+      end;
+
+    4:
+      begin // pesquisa todas as peças por LOTE
+        ed_nome.Visible := true;
+        ed_nome.SetFocus;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := false;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        lb_nome.Caption := 'Informe o Lote desejado';
+      end;
+
+    5:
+      begin // pesquisa por dia
+        ed_nome.Visible := false;
+        lb_nome.Visible := true;
+        mk_inicio.Visible := true;
+        mk_fim.Visible := false;
+        lbl_EdtInicio.Visible := false;
+        lbl_EdtFinal.Visible := false;
+        mk_inicio.SetFocus;
+        lb_nome.Caption := 'Informe data';
+      end;
+
+    6:
+      begin // pesquisa por período
+        ed_nome.Visible := false;
+        lb_nome.Visible := false;
+        mk_fim.Visible := true;
+        lbl_EdtFinal.Visible := true;
+        mk_inicio.Visible := true;
+        lbl_EdtInicio.Visible := true;
+        mk_inicio.SetFocus;
+      end;
+
+  end;
+
+end;
+
+procedure Tfrm_RelUsinagens.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  with DBGrid1 do
+  begin
+   if Odd(DataSource.DataSet.RecNo) then //clWebWheat
+      Canvas.Brush.Color := clWebAntiqueWhite
+   else
+      Canvas.Brush.Color := clWhite;
+
+      canvas.FillRect(Rect);
+      DefaultDrawColumnCell( Rect, DataCol, Column, State);
+    end;
+end;
+
+procedure Tfrm_RelUsinagens.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  frm_RelUsinagens.Free;
+  frm_RelUsinagens := nil;
+
+end;
+
+procedure Tfrm_RelUsinagens.FormShow(Sender: TObject);
+begin
+  ed_nome.Visible := False;
+end;
+
+procedure Tfrm_RelUsinagens.pesq_peca;
+begin
+   // Preparando SQL para procurar peça desejada
+   Q_pesq_padrao.Close; // fecha
+   Q_pesq_padrao.SQL.Add(''); // limpa
+   Q_pesq_padrao.Params.Clear;  //limpamos os parametros
+   Q_pesq_padrao.SQL.Clear;  // limPa o sql
+   Q_pesq_padrao.SQL.Add('SELECT NUMERO_DO_LOTE, '
+    + 'NUMERO_DO_PEDIDO ,'
+    + 'NUMERO_DA_ORDEM ,'
+    + 'DESCRICAO_PECA ,'
+    + 'ID ,'
+    + 'DESENHO_PROGRAMADO_1 ,'
+    + 'USINAGEM , '
+    + 'DT_TRABALHO , '
+    + 'RETRAB_USI , '
+    + 'DT_RETRAB_USI '
+    + 'FROM TB_BASE_DADOS'); // add sql
+
+ case cb_chave_pesquisa.ItemIndex of
+   0:begin// pesquisa por código geral
+      Q_pesq_padrao.SQL.Add('WHERE ID =:PID'); // criamos o parametro
+      Q_pesq_padrao.ParamByName('PID').AsString:=ed_nome.Text; // aponta para o campo do parametro
+
+   end;
+
+   1:begin // pesquisa por código número da ordem 'O.P'
+      Q_pesq_padrao.SQL.Add('WHERE NUMERO_DA_ORDEM =:PNUMORDEM'); // criamos o parametro
+      Q_pesq_padrao.ParamByName('PNUMORDEM').AsString:=ed_nome.Text; // aponta para o campo do parametro
+
+   end;
+
+   2:begin // pesquisa por código de usinagem
+      Q_pesq_padrao.SQL.Add('WHERE DESENHO_PROGRAMADO_1 =:PDP1'); // criamos o parametro
+      Q_pesq_padrao.ParamByName('PDP1').AsString:=ed_nome.Text; // aponta para o campo do parametro
+
+   end;
+
+   3:begin// pesquisa todas as peças USINADAS
+      Q_pesq_padrao.SQL.Add('WHERE USINAGEM =:PUSINAGEM'); // criamos o parametro
+      Q_pesq_padrao.ParamByName('PUSINAGEM').AsString:=ed_nome.Text;// aponta para o campo do parametro
+      Q_pesq_padrao.SQL.Add('ORDER BY NUMERO_DA_ORDEM');
+   end;
+
+   4:begin// pesquisa todas as peças do lote
+      Q_pesq_padrao.SQL.Add('WHERE NUMERO_DO_LOTE =:PNLOTE'); // criamos o parametro
+      Q_pesq_padrao.ParamByName('PNLOTE').AsString := ed_nome.Text; // aponta para o campo do parametro
+      Q_pesq_padrao.SQL.Add('ORDER BY NUMERO_DA_ORDEM');
+   end;
+
+   5:begin// pesquisa por dadta
+       Q_pesq_padrao.SQL.Add('WHERE DT_TRABALHO =:PTRAB');
+       Q_pesq_padrao.ParamByName('PTRAB').AsDate:=strTodate(mk_inicio.Text);
+   end;
+
+   6:begin// pesquisa por periodo
+       Q_pesq_padrao.SQL.Add('WHERE DT_TRABALHO BETWEEN :PINICIO AND :PFIM');
+       Q_pesq_padrao.ParamByName('PINICIO').AsDate:=strTodate(mk_inicio.Text);
+       Q_pesq_padrao.ParamByName('PFIM').AsDate:=strTodate(mk_fim.Text);
+   end;
+
+   7:begin
+     Q_pesq_padrao.SQL.Add('ORDER BY NUMERO_DA_ORDEM');
+   end;
+
+ end;
+
+// abre a query mostra o resultado
+  Q_pesq_padrao.Open;
+
+ // Mostra a quantidade de registros encontrados
+    lb_Resultado.Caption:=' Total de Registros Localizados:   ' +
+    IntTostr(Q_pesq_padrao.recordcount);
+
+ // se nada for encontrado mostra a msg
+ if Q_pesq_padrao.IsEmpty then
+    begin
+      Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+    end
+    else
+    abort;
+end;
+
+procedure Tfrm_RelUsinagens.Timer1Timer(Sender: TObject);
+begin
+//Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='Relatório de USINAGENS:';
+end;
+
+procedure Tfrm_RelUsinagens.ed_nomeKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+    begin
+      pesq_Peca;
+    end;
+end;
+
+procedure Tfrm_RelUsinagens.btn_SairClick(Sender: TObject);
+begin
+  inherited;
+  frm_RelUsinagens.Free;
+  frm_RelUsinagens := nil;
+end;
+
+procedure Tfrm_RelUsinagens.bt_ImprimirClick(Sender: TObject);
+var
+  caminho: string;
+begin
+   // ABRE RELATÓRIO
+  caminho := ExtractFilepath(Application.ExeName);
+  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens2.fr3')then
+  begin
+    REL_pesq_padrao.clear; // limpa relatorio
+    REL_pesq_padrao.LoadFromFile(ExtractFilepath(Application.ExeName) +
+      'RelUsinagens2.fr3');
+    REL_pesq_padrao.PrepareReport(true);
+    REL_pesq_padrao.ShowPreparedReport;
+  end
+  else
+    Messagedlg('Relatorio não encontrado', mtError, [mbOk], 0);
+
+end;
+
+procedure Tfrm_RelUsinagens.bt_PesquisaClick(Sender: TObject);
+begin
+  pesq_peca;
+end;
+
+end.

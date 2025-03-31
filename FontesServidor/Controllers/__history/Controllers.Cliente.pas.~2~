@@ -1,0 +1,29 @@
+unit Controllers.Cliente;
+
+interface
+
+uses Horse;
+
+implementation
+
+procedure Listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+ begin
+   Res.Send('Aqui vou listar os clientes').Status(200);
+ end;
+
+ procedure Inserir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+ begin
+   Res.Send('Aqui vou INSERIR os clientes').Status(201);
+ end;
+
+ procedure Editar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+ begin
+   Res.Send('Aqui vou EDITAR os clientes').Status(200);
+ end;
+
+ procedure Excluir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+ begin
+   Res.Send('Aqui vou EXCLUIR os clientes').Status(200);
+ end;
+
+end.

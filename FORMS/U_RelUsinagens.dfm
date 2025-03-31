@@ -3,6 +3,8 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   Caption = 'frm_RelUsinagens'
   KeyPreview = False
   WindowState = wsMaximized
+  OnClose = FormClose
+  ExplicitLeft = -86
   TextHeight = 15
   inherited pnl_Cabecalho: TPanel
     Height = 70
@@ -1005,7 +1007,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   end
   inherited REL_pesq_padrao: TfrxReport
     ReportOptions.CreateDate = 45728.474760011600000000
-    ReportOptions.LastChange = 45742.802690578700000000
+    ReportOptions.LastChange = 45746.969699189820000000
     Datasets = <
       item
         DataSet = DatSET_pesq_padrao
@@ -1522,30 +1524,10 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
             '[COUNT(MasterData1)]')
           ParentFont = False
         end
-        object MemoCOUNT: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 338.055350000000000000
-          Top = 13.984251970000000000
-          Width = 34.015770000000000000
-          Height = 18.897650000000000000
-          ContentScaleOptions.Constraints.MaxIterationValue = 0
-          ContentScaleOptions.Constraints.MinIterationValue = 0
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clRed
-          Font.Height = -13
-          Font.Name = 'Arial Narrow'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '[COUNT(MasterData1)]')
-          ParentFont = False
-        end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 190.551330000000000000
-          Top = 14.000000000000000000
+          Left = 425.102660000000000000
+          Top = 13.984251970000000000
           Width = 147.401547950000000000
           Height = 18.897659300000000000
           ContentScaleOptions.Constraints.MaxIterationValue = 0

@@ -273,7 +273,7 @@ procedure Tfrm_RelCorte.bt_ImprimirClick(Sender: TObject);
 var
   caminho: string;
 begin
-    // ABRE RELATÓRIO
+   // ABRE RELATÓRIO
   caminho := ExtractFilepath(Application.ExeName);
   if frm_RelCorte.REL_pesq_padrao.LoadFromFile(caminho + 'RelCorte.fr3')
   then
