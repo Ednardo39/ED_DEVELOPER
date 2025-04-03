@@ -16,7 +16,8 @@ uses
   U_RelCorte in '..\FORMS\U_RelCorte.pas' {frm_RelCorte},
   U_RelBorda in '..\FORMS\U_RelBorda.pas' {frm_RelBorda},
   U_RelFuracao in '..\FORMS\U_RelFuracao.pas' {frm_RelFuracao},
-  U_DelLote in '..\FORMS\U_DelLote.pas' {frm_DelLote};
+  U_DelLote in '..\FORMS\U_DelLote.pas' {frm_DelLote},
+  U_CadAvulso in '..\FORMS\U_CadAvulso.pas' {frmCadAvulso};
 
 {$R *.res}
 

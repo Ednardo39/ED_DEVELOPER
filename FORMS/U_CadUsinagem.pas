@@ -48,6 +48,11 @@ type
     edt_Retrab: TDBEdit;
     lbl_DtReTrab: TLabel;
     edt_DtReTrab: TDBEdit;
+    Label9: TLabel;
+    edtCodUsinagem: TEdit;
+    btnBuscarUsinagem: TSpeedButton;
+    Panel2: TPanel;
+    tbnPecaAvulsa: TSpeedButton;
     procedure Timer1Timer(Sender: TObject);
     procedure btn_CodPrincipalClick(Sender: TObject);
     procedure btn_SalvarClick(Sender: TObject);
@@ -58,10 +63,17 @@ type
     procedure btn_CodOPClick(Sender: TObject);
     procedure edtCodigoOPKeyPress(Sender: TObject; var Key: Char);
     procedure edtCodigoOPExit(Sender: TObject);
+    procedure edt_RetrabClick(Sender: TObject);
+    procedure edt_RetrabKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCodUsinagemExit(Sender: TObject);
+    procedure edtCodUsinagemKeyPress(Sender: TObject; var Key: Char);
+    procedure btnBuscarUsinagemClick(Sender: TObject);
+    procedure tbnPecaAvulsaClick(Sender: TObject);
   private
     { Private declarations }
     procedure buscarCodPeca;
     procedure buscarCodOP;
+    procedure buscarCodUsinagem;
     procedure salvar;
   public
     { Public declarations }
@@ -74,9 +86,15 @@ implementation
 
 {$R *.dfm}
 
+uses U_CadAvulso;
+
 procedure Tfrm_CadUsinagem.btn_SalvarClick(Sender: TObject);
 begin
+  if (edt_Trabalho.Text = 'OK') or (edt_Trabalho.Text = '') then
+  begin
   salvar;
+  edtCodPeca.SetFocus;
+  end;
 end;
 
 procedure Tfrm_CadUsinagem.buscarCodOP;
@@ -87,9 +105,9 @@ begin
     Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
     Q_Padrao.SQL.Add(' WHERE 1 = 1');
 
-    if Trim(edtCodPeca.Text) <> '' then
+    if Trim(edtCodigoOP.Text) <> '' then
       begin
-        Q_Padrao.SQL.Add(' AND NUMERO_ORDEM = ' + QuotedStr(edtCodPeca.Text));
+        Q_Padrao.SQL.Add(' AND NUMERO_DA_ORDEM = ' + QuotedStr(edtCodigoOP.Text));
       end;
     // abre a query mostra o resultado
     Q_Padrao.Open();
@@ -107,8 +125,8 @@ begin
 
         lbl_Retrab.Visible := True;
         edt_Retrab.Visible := True;
-        edt_DtReTrab.Visible := True;
         lbl_DtReTrab.Visible := True;
+        edt_Retrab.Text  := DateTostr(Now);
         edt_Retrab.SetFocus;
 
       end
@@ -179,6 +197,80 @@ begin
       abort;
 end;
 
+procedure Tfrm_CadUsinagem.buscarCodUsinagem;
+begin
+    Q_Padrao.Close; // Fecha conexao com banco
+    Q_Padrao.SQL.Add('');// Limpa conexao com banco
+    Q_Padrao.SQL.Clear;  // Limpa SQL
+    Q_Padrao.SQL.Add('SELECT * FROM TB_BASE_DADOS');
+    Q_Padrao.SQL.Add(' WHERE 1 = 1');
+
+    if Trim(edtCodUsinagem.Text) <> '' then
+      begin
+        Q_Padrao.SQL.Add(' AND DESENHO_PROGRAMADO_1 = ' + QuotedStr(edtCodUsinagem.Text));
+      end;
+    // abre a query mostra o resultado
+    Q_Padrao.Open();
+    edtCodPeca.Text  := ('');
+    edtCodigoOP.Text := ('');
+    edtCodUsinagem.Text := ('');
+
+    if Trim(edt_Trabalho.Text) ='OK' then
+    begin
+      if MessageDlg('Peça já USINADA! Deseja editar esse registro?',TMsgDlgType.mtWarning,[mbOk,mbNo],0)=mrOk then
+      begin
+        edt_Trabalho.Visible := False;
+        lbl_Trabalho.Visible := False;
+        edt_DtTrab.Visible := False;
+        lbl_DtTrab.Visible := False;
+
+        lbl_Retrab.Visible := True;
+        edt_Retrab.Visible := True;
+        edt_DtReTrab.Visible := True;
+        lbl_DtReTrab.Visible := True;
+        edt_Retrab.SetFocus;
+
+      end
+     { MessageDlg('Peça já USINADA!',mtInformation,[mbOk],0);
+      edtUsinagem.Enabled := False; }
+    end
+    else if Trim(edt_Trabalho.Text) ='' then
+      begin
+        edt_Trabalho.Enabled := True;
+        edt_Trabalho.SetFocus;
+      end;
+    // Se nada for encontrado mostra a msg
+   if Q_Padrao.IsEmpty then
+      begin
+        Messagedlg('Registro não encontrado!',MtInformation,[mbOk],0);
+      end
+      else
+      abort;
+end;
+
+procedure Tfrm_CadUsinagem.edtCodUsinagemExit(Sender: TObject);
+begin
+  if edt_Trabalho.Text = '' then
+   begin
+    edt_DtTrab.Text := DateTostr(Now);
+   end
+   else if edt_Retrab.Text = '' then
+   begin
+    edt_DtReTrab.Text := DateTostr(Now);
+   end;
+end;
+
+procedure Tfrm_CadUsinagem.edtCodUsinagemKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+  begin
+    edt_DtTrab.Text := DateTostr(Now);
+    edt_Trabalho.Enabled := True;
+//    edtHrTrabalho.Text := TimeTostr(Now);
+    buscarCodUsinagem;
+  end;
+end;
+
 procedure Tfrm_CadUsinagem.edtCodigoOPExit(Sender: TObject);
 begin
   if edt_Trabalho.Text = '' then
@@ -225,48 +317,98 @@ begin
   end;
 end;
 
+procedure Tfrm_CadUsinagem.edt_RetrabClick(Sender: TObject);
+begin
+  inherited;
+  edt_Retrab.Text  := DateTostr(Now);
+end;
+
+procedure Tfrm_CadUsinagem.edt_RetrabKeyPress(Sender: TObject; var Key: Char);
+begin
+  edt_DtReTrab.Text := DateTostr(Now);
+  if (key=#13) AND (edt_DtReTrab.Text = '') then
+  begin
+    edt_DtReTrab.Text := DateTostr(Now);
+  end
+
+  //Salvando as alterações ao precionar a tecla ENTER
+  else if (key=#13) then
+  begin
+    if (edt_ReTrab.Text = 'OK') or (edt_ReTrab.Text = '') then
+    begin
+     btn_Salvar.Click;
+    end
+    else
+      MessageDlg('Informação invalída',mtInformation,[mbOk],0);
+  end
+end;
+
 procedure Tfrm_CadUsinagem.edt_TrabalhoKeyPress(Sender: TObject; var Key: Char);
 begin
 
   edt_DtTrab.Text := DateTostr(Now);
   if (key=#13) AND (edt_Trabalho.Text = '') then
   begin
-    MessageDlg('Operação invalida.',mtInformation,[mbOk],0);
+    edt_DtTrab.Text := DateTostr(Now);
   end
 
   //Salvando as alterações ao precionar a tecla ENTER
   else if (key=#13) then
   begin
-    btn_Salvar.Click;
+    if (edt_Trabalho.Text = 'OK') or (edt_Trabalho.Text = '') then
+    begin
+     btn_Salvar.Click;
+    end
+    else
+      MessageDlg('Informação invalída',mtInformation,[mbOk],0);
   end
 
 end;
 
 procedure Tfrm_CadUsinagem.salvar;
 begin
-  // Salvar as alterações feitas
-  Q_Padrao.Open;
-  Q_Padrao.edit;
-  MessageDlg('Registro editado com sucesso!',mtInformation,[mbOk],0);
-  edtCodPeca.Text := '';
-  edtCodigoOP.Text := '';
-  edt_Retrab.Visible := False;
-  edt_DtRetrab.Visible := False;
-  lbl_Retrab.Visible := False;
-  lbl_DtRetrab.Visible := False;
 
-  edt_Trabalho.Visible := True;
-  edt_Dttrab.Visible := True;
-  lbl_Trabalho.Visible := True;
-  lbl_Dttrab.Visible := True;
+  if (edt_Trabalho.Text = 'OK') or (edt_Trabalho.Text = '') then
+   begin
+      // Salvar as alterações feitas
+      Q_Padrao.Open;
+      Q_Padrao.edit;
+      MessageDlg('Registro editado com sucesso!',mtInformation,[mbOk],0);
+      edtCodPeca.Text := '';
+      edtCodigoOP.Text := '';
+      edt_Retrab.Visible := False;
+      edt_DtRetrab.Visible := False;
+      lbl_Retrab.Visible := False;
+      lbl_DtRetrab.Visible := False;
 
-  Q_Padrao.FetchAll;
-  Q_Padrao.Close;
+      edt_Trabalho.Visible := True;
+      edt_Dttrab.Visible := True;
+      lbl_Trabalho.Visible := True;
+      lbl_Dttrab.Visible := True;
+
+      Q_Padrao.FetchAll;
+      Q_Padrao.Close;
+   end
+   else
+      MessageDlg('Informação invalída',mtInformation,[mbOk],0);
 end;
 
 procedure Tfrm_CadUsinagem.SpeedButton1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure Tfrm_CadUsinagem.tbnPecaAvulsaClick(Sender: TObject);
+begin
+  frmCadAvulso:=TfrmCadAvulso.Create(self);
+  frmCadAvulso.ShowModal;
+  try
+  ////   frm_CadPadrao := Tfrm_CadPadrao.Create(Self);
+  ////   frm_CadPadrao.Show;
+  finally
+  frmCadAvulso.Free;
+  frmCadAvulso:=nil;
+  end;
 end;
 
 procedure Tfrm_CadUsinagem.Timer1Timer(Sender: TObject);
@@ -276,6 +418,11 @@ Statusbar1.Panels[0].Text:=DateToStr(now);
 Statusbar1.Panels[1].Text:=TimeToStr(now);
 Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
 Statusbar1.Panels[3].Text:='CONTROLE DE USINAGEM';
+end;
+
+procedure Tfrm_CadUsinagem.btnBuscarUsinagemClick(Sender: TObject);
+begin
+  buscarCodUsinagem;
 end;
 
 procedure Tfrm_CadUsinagem.btn_CodOPClick(Sender: TObject);

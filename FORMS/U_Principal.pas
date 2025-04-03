@@ -76,7 +76,7 @@ implementation
 {$R *.dfm}
 
 uses U_CadBorda, U_CadCorte, U_CadFuracao, U_CadUsinagem, U_DM, U_GestaoDB,
-  U_RelUsinagens, U_RelCorte, U_RelBorda, U_RelFuracao, U_DelLote;
+  U_RelUsinagens, U_RelCorte, U_RelBorda, U_RelFuracao, U_DelLote, U_CadAvulso;
 
 procedure Tfrm_Principal.btnMenuClick(Sender: TObject);
 begin

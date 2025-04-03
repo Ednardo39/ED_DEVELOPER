@@ -185,6 +185,10 @@
             <Form>frm_DelLote</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\FORMS\U_CadAvulso.pas">
+            <Form>frmCadAvulso</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

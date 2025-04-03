@@ -1,0 +1,128 @@
+unit U_CadAvulso;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.ImageList, Vcl.ImgList,
+  Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  TfrmCadAvulso = class(TForm)
+    pnl_Cabecalho: TPanel;
+    Label1: TLabel;
+    btnSair: TSpeedButton;
+    ImageList1: TImageList;
+    StatusBar1: TStatusBar;
+    Timer1: TTimer;
+    Q_CadPecas: TFDQuery;
+    ds_CadPecas: TDataSource;
+    Q_CadPecasNUMERO_DO_LOTE: TStringField;
+    Q_CadPecasNUMERO_DO_PEDIDO: TStringField;
+    Q_CadPecasNUMERO_DA_ORDEM: TStringField;
+    Q_CadPecasDESCRICAO_PECA: TStringField;
+    Q_CadPecasDESENHO_PROGRAMADO_1: TStringField;
+    Label2: TLabel;
+    edtLote: TDBEdit;
+    Label3: TLabel;
+    edtPedido: TDBEdit;
+    Label4: TLabel;
+    edtOp: TDBEdit;
+    Label5: TLabel;
+    edtDescPeca: TDBEdit;
+    Label6: TLabel;
+    Label7: TLabel;
+    edtCodPeca: TDBEdit;
+    Panel1: TPanel;
+    btnSalvar: TSpeedButton;
+    Label8: TLabel;
+    Panel2: TPanel;
+    btn_Limpar: TSpeedButton;
+    procedure Timer1Timer(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btn_LimparClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure salvar;
+    procedure limpar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadAvulso: TfrmCadAvulso;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+procedure TfrmCadAvulso.btnSairClick(Sender: TObject);
+begin
+  frmCadAvulso.Free;
+  frmCadAvulso := nil;
+end;
+
+procedure TfrmCadAvulso.btnSalvarClick(Sender: TObject);
+begin
+  salvar;
+end;
+
+procedure TfrmCadAvulso.btn_LimparClick(Sender: TObject);
+begin
+  limpar;
+end;
+
+procedure TfrmCadAvulso.FormShow(Sender: TObject);
+begin
+//  Q_CadPecas.Open;
+//  Q_CadPecas.edit;
+end;
+
+procedure TfrmCadAvulso.limpar;
+begin
+  edtLote.Text := ('');
+  edtPedido.Text := ('');
+  edtOp.Text := ('');
+  edtDescPeca.Text := ('');
+  edtCodPeca.Text := ('');
+end;
+
+procedure TfrmCadAvulso.salvar;
+begin
+      // Salvar as peças avulsas
+      Q_CadPecas.Open;
+      Q_CadPecas.Post;
+      MessageDlg('Registro editado com sucesso!',mtInformation,[mbOk],0);
+//      edtCodPeca.Text := '';
+//      edtCodigoOP.Text := '';
+//      edt_Retrab.Visible := False;
+//      edt_DtRetrab.Visible := False;
+//      lbl_Retrab.Visible := False;
+//      lbl_DtRetrab.Visible := False;
+//
+//      edt_Trabalho.Visible := True;
+//      edt_Dttrab.Visible := True;
+//      lbl_Trabalho.Visible := True;
+//      lbl_Dttrab.Visible := True;
+
+      Q_CadPecas.FetchAll;
+      Q_CadPecas.Close;
+end;
+
+procedure TfrmCadAvulso.Timer1Timer(Sender: TObject);
+begin
+//Insere dados no statusbar
+Statusbar1.Panels[0].Text:=DateToStr(now);
+Statusbar1.Panels[1].Text:=TimeToStr(now);
+Statusbar1.Panels[2].Text:='SEJA BEM VINDO(A) AO SISTEMA';
+Statusbar1.Panels[3].Text:='CADASTRO DE PEÇAS AVULSAS';
+end;
+
+end.

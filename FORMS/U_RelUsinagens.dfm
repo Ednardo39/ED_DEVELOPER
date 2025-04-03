@@ -4,7 +4,6 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   KeyPreview = False
   WindowState = wsMaximized
   OnClose = FormClose
-  ExplicitLeft = -86
   TextHeight = 15
   inherited pnl_Cabecalho: TPanel
     Height = 70
