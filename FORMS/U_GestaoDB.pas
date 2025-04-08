@@ -55,11 +55,11 @@ type
     QPRINCDATA_ENTREGA_LOTE: TStringField;
     QPRINCID_PROMOB: TStringField;
     QPRINCLOGO: TStringField;
-    StringGrid1: TStringGrid;
     ImageList1: TImageList;
     Image1: TImage;
     SpeedButton3: TSpeedButton;
     ImageList2: TImageList;
+    StringGrid1: TStringGrid;
     procedure btnImportarClick(Sender: TObject);
     procedure bntSalvarClick(Sender: TObject);
     procedure btnDelLoteClick(Sender: TObject);

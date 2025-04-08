@@ -3,29 +3,29 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   Caption = 'frm_RelUsinagens'
   KeyPreview = False
   WindowState = wsMaximized
-  OnClose = FormClose
   TextHeight = 15
   inherited pnl_Cabecalho: TPanel
     Height = 70
     ExplicitHeight = 70
     inherited Label1: TLabel
-      Left = 103
+      Left = 169
       Top = 4
-      ExplicitLeft = 103
+      ExplicitLeft = 169
       ExplicitTop = 4
     end
     inherited lb_nome: TLabel
-      Left = 265
+      Left = 331
       Top = 4
-      ExplicitLeft = 265
+      ExplicitLeft = 331
       ExplicitTop = 4
     end
     inherited btn_Sair: TSpeedButton
       Height = 70
+      ExplicitLeft = 793
       ExplicitHeight = 70
     end
     object lb_Resultado: TLabel [3]
-      Left = 103
+      Left = 169
       Top = 47
       Width = 3
       Height = 15
@@ -36,12 +36,8 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
       Font.Style = []
       ParentFont = False
     end
-    inherited SpeedButton2: TSpeedButton
-      Height = 70
-      ExplicitHeight = 70
-    end
-    object lbl_EdtFinal: TLabel [5]
-      Left = 362
+    object lbl_EdtFinal: TLabel [4]
+      Left = 428
       Top = 4
       Width = 74
       Height = 20
@@ -54,8 +50,8 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
       ParentFont = False
       Visible = False
     end
-    object lbl_EdtInicio: TLabel [6]
-      Left = 265
+    object lbl_EdtInicio: TLabel [5]
+      Left = 331
       Top = 4
       Width = 82
       Height = 20
@@ -70,7 +66,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
       WordWrap = True
     end
     inherited cb_chave_pesquisa: TComboBox
-      Left = 103
+      Left = 169
       Top = 24
       OnChange = cb_chave_pesquisaChange
       Items.Strings = (
@@ -81,42 +77,59 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
         'POR LOTE'
         'POR DIA'
         'POR PER'#205'ODO')
-      ExplicitLeft = 103
+      ExplicitLeft = 169
       ExplicitTop = 24
     end
     inherited ed_nome: TEdit
-      Left = 265
+      Left = 331
       Top = 24
       OnKeyPress = ed_nomeKeyPress
-      ExplicitLeft = 265
+      ExplicitLeft = 331
       ExplicitTop = 24
     end
     inherited pnlPesq: TPanel
-      Top = 9
-      Height = 55
-      ExplicitTop = 9
-      ExplicitHeight = 55
+      AlignWithMargins = True
+      Left = 547
+      Top = 3
+      Width = 115
+      Height = 64
+      Margins.Right = 6
+      Align = alRight
+      Color = clSkyBlue
+      Font.Color = clWhite
+      Font.Style = [fsBold]
+      ExplicitLeft = 547
+      ExplicitTop = 3
+      ExplicitWidth = 115
+      ExplicitHeight = 64
       inherited bt_Pesquisa: TSpeedButton
-        Height = 55
+        Width = 115
+        Height = 64
         Images = ImageList48
+        Font.Height = -16
         Layout = blGlyphTop
         Spacing = -20
         OnClick = bt_PesquisaClick
-        ExplicitLeft = 3
-        ExplicitTop = 2
-        ExplicitWidth = 114
-        ExplicitHeight = 49
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 115
+        ExplicitHeight = 70
       end
     end
     inherited pnl_Imprimir: TPanel
-      Left = 630
-      Top = 9
-      Height = 55
-      ExplicitLeft = 630
-      ExplicitTop = 9
-      ExplicitHeight = 55
+      AlignWithMargins = True
+      Left = 671
+      Top = 3
+      Height = 64
+      Margins.Right = 6
+      Align = alRight
+      Color = clSkyBlue
+      Font.Color = clSkyBlue
+      ExplicitLeft = 671
+      ExplicitTop = 3
+      ExplicitHeight = 64
       inherited bt_Imprimir: TSpeedButton
-        Height = 55
+        Height = 64
         Images = ImageList48
         Layout = blGlyphTop
         Spacing = -25
@@ -126,19 +139,8 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
         ExplicitHeight = 55
       end
     end
-    object mk_inicio: TMaskEdit
-      Left = 265
-      Top = 24
-      Width = 75
-      Height = 23
-      EditMask = '!99/99/00;1;_'
-      MaxLength = 8
-      TabOrder = 4
-      Text = '  /  /  '
-      Visible = False
-    end
-    object mk_fim: TMaskEdit
-      Left = 362
+    object mk_fim: TMaskEdit [10]
+      Left = 428
       Top = 24
       Width = 75
       Height = 23
@@ -147,6 +149,56 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
       TabOrder = 5
       Text = '  /  /  '
       Visible = False
+    end
+    object mk_inicio2: TMaskEdit [11]
+      Left = 331
+      Top = 24
+      Width = 75
+      Height = 23
+      EditMask = '!99/99/00;1;_'
+      MaxLength = 8
+      TabOrder = 6
+      Text = '  /  /  '
+      Visible = False
+      OnKeyPress = mk_inicioKeyPress
+    end
+    object mk_inicio: TMaskEdit [12]
+      Left = 331
+      Top = 24
+      Width = 75
+      Height = 23
+      EditMask = '!99/99/00;1;_'
+      MaxLength = 8
+      TabOrder = 4
+      Text = '  /  /  '
+      Visible = False
+      OnKeyPress = mk_inicioKeyPress
+    end
+    inherited pnlLogo: TPanel
+      Width = 145
+      Height = 70
+      TabOrder = 7
+      ExplicitWidth = 145
+      ExplicitHeight = 70
+      object Label10: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 139
+        Height = 64
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'PLANMOV'#201'IS'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 5585461
+        Font.Height = -16
+        Font.Name = 'Segoe UI Black'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Layout = tlCenter
+        ExplicitWidth = 107
+        ExplicitHeight = 21
+      end
     end
   end
   object StatusBar1: TStatusBar [1]
@@ -343,7 +395,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
     Top = 88
   end
   inherited ImageList1: TImageList
-    Left = 184
+    Left = 128
     Top = 88
   end
   object Timer1: TTimer [6]
@@ -1001,12 +1053,18 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
       000000000000000000000000000000000000}
   end
   inherited ImageList3: TImageList
-    Left = 688
-    Top = 192
+    Left = 120
+    Top = 272
+  end
+  inherited ImageList2: TImageList
+    Left = 128
+    Top = 216
   end
   inherited REL_pesq_padrao: TfrxReport
     ReportOptions.CreateDate = 45728.474760011600000000
-    ReportOptions.LastChange = 45746.969699189820000000
+    ReportOptions.LastChange = 45754.926492673610000000
+    Left = 280
+    Top = 152
     Datasets = <
       item
         DataSet = DatSET_pesq_padrao
@@ -1525,7 +1583,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
-          Left = 425.102660000000000000
+          Left = 433.661720000000000000
           Top = 13.984251970000000000
           Width = 147.401547950000000000
           Height = 18.897659300000000000
@@ -1546,7 +1604,7 @@ inherited frm_RelUsinagens: Tfrm_RelUsinagens
   end
   inherited DatSET_pesq_padrao: TfrxDBDataset
     UserName = 'DatSET_RelUsinagens'
-    Left = 552
+    Left = 384
     Top = 160
     FieldDefs = <
       item

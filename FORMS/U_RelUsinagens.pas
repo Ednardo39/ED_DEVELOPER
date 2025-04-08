@@ -4,12 +4,14 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_PadraoRel, FireDAC.Stan.Intf,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, U_PadraoRel, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+
+
   frxSmartMemo, System.ImageList, Vcl.ImgList, frxClass, frxDBSet,
   frCoreClasses, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Buttons,  Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids,
   Vcl.Imaging.jpeg, Vcl.Mask;
 
 type
@@ -33,6 +35,8 @@ type
     lbl_EdtFinal: TLabel;
     mk_fim: TMaskEdit;
     lbl_EdtInicio: TLabel;
+    mk_inicio2: TMaskEdit;
+    Label10: TLabel;
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure ed_nomeKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
@@ -42,7 +46,8 @@ type
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btn_SairClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure mk_inicioKeyPress(Sender: TObject; var Key: Char);
+//    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure pesq_peca;
@@ -66,6 +71,7 @@ begin
         ed_nome.SetFocus;
         lb_nome.Visible := true;
         mk_inicio.Visible := false;
+        mk_inicio2.Visible := false;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
@@ -78,6 +84,7 @@ begin
         ed_nome.SetFocus;
         lb_nome.Visible := true;
         mk_inicio.Visible := false;
+        mk_inicio2.Visible := false;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
@@ -90,6 +97,7 @@ begin
         ed_nome.SetFocus;
         lb_nome.Visible := true;
         mk_inicio.Visible := false;
+        mk_inicio2.Visible := false;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
@@ -102,6 +110,7 @@ begin
         ed_nome.SetFocus;
         lb_nome.Visible := true;
         mk_inicio.Visible := false;
+        mk_inicio2.Visible := false;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
@@ -115,6 +124,7 @@ begin
         ed_nome.SetFocus;
         lb_nome.Visible := true;
         mk_inicio.Visible := false;
+        mk_inicio2.Visible := false;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
@@ -126,11 +136,14 @@ begin
         ed_nome.Visible := false;
         lb_nome.Visible := true;
         mk_inicio.Visible := true;
+        mk_inicio2.Visible := true;
         mk_fim.Visible := false;
         lbl_EdtInicio.Visible := false;
         lbl_EdtFinal.Visible := false;
         mk_inicio.SetFocus;
         lb_nome.Caption := 'Informe data';
+        mk_inicio.Text := DateTostr(Now);
+        mk_inicio2.Text := DateTostr(Now);
       end;
 
     6:
@@ -163,16 +176,17 @@ begin
     end;
 end;
 
-procedure Tfrm_RelUsinagens.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-  frm_RelUsinagens := nil;
-//  frm_RelUsinagens := Freeandnil;
-end;
-
 procedure Tfrm_RelUsinagens.FormShow(Sender: TObject);
 begin
   ed_nome.Visible := False;
+end;
+
+procedure Tfrm_RelUsinagens.mk_inicioKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+    begin
+      pesq_Peca;
+    end;
 end;
 
 procedure Tfrm_RelUsinagens.pesq_peca;
@@ -225,9 +239,11 @@ begin
       Q_pesq_padrao.SQL.Add('ORDER BY NUMERO_DA_ORDEM');
    end;
 
-   5:begin// pesquisa por dadta
+   5:begin// pesquisa por data
        Q_pesq_padrao.SQL.Add('WHERE DT_TRABALHO =:PTRAB');
        Q_pesq_padrao.ParamByName('PTRAB').AsDate:=strTodate(mk_inicio.Text);
+       Q_pesq_padrao.SQL.Add('OR DT_RETRAB_USI =:PRET');
+       Q_pesq_padrao.ParamByName('PRET').AsDate:=strTodate(mk_inicio2.Text);
    end;
 
    6:begin// pesquisa por periodo
@@ -277,9 +293,7 @@ end;
 
 procedure Tfrm_RelUsinagens.btn_SairClick(Sender: TObject);
 begin
-  inherited;
-  frm_RelUsinagens.Free;
-  frm_RelUsinagens := nil;
+  Close;
 end;
 
 procedure Tfrm_RelUsinagens.bt_ImprimirClick(Sender: TObject);
@@ -288,11 +302,11 @@ var
 begin
    // ABRE RELATÓRIO
   caminho := ExtractFilepath(Application.ExeName);
-  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens2.fr3')then
+  if frm_RelUsinagens.REL_pesq_padrao.LoadFromFile(caminho + 'RelUsinagens22.fr3')then
   begin
     REL_pesq_padrao.clear; // limpa relatorio
     REL_pesq_padrao.LoadFromFile(ExtractFilepath(Application.ExeName) +
-      'RelUsinagens2.fr3');
+      'RelUsinagens22.fr3');
     REL_pesq_padrao.PrepareReport(true);
     REL_pesq_padrao.ShowPreparedReport;
   end

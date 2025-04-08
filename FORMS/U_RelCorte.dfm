@@ -319,7 +319,7 @@ inherited frm_RelCorte: Tfrm_RelCorte
   end
   inherited REL_pesq_padrao: TfrxReport
     ReportOptions.CreateDate = 45728.474760011600000000
-    ReportOptions.LastChange = 45734.364747835650000000
+    ReportOptions.LastChange = 45750.218430729170000000
     Datasets = <
       item
         DataSet = DatSET_pesq_padrao
@@ -822,7 +822,7 @@ inherited frm_RelCorte: Tfrm_RelCorte
           Font.Style = [fsBold]
           Frame.Typ = []
           Memo.UTF8W = (
-            'Qtd.pe'#231'as usinadas:')
+            'Qtd.pe'#231'as cortadas:')
           ParentFont = False
         end
         object SysMemo1: TfrxSysMemoView

@@ -46,6 +46,7 @@ type
     procedure btnSalvarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btn_LimparClick(Sender: TObject);
+    procedure edtCodPecaKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     procedure salvar;
@@ -80,6 +81,14 @@ begin
   limpar;
 end;
 
+procedure TfrmCadAvulso.edtCodPecaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13  then
+    begin
+      btnSair.Click;
+    end;
+end;
+
 procedure TfrmCadAvulso.FormShow(Sender: TObject);
 begin
 //  Q_CadPecas.Open;
@@ -100,20 +109,8 @@ end;
 procedure TfrmCadAvulso.salvar;
 begin
       // Salvar as peças avulsas
-//      Q_CadPecas.Open;
       Q_CadPecas.Post;
       MessageDlg('Registro SALVO com sucesso!',mtInformation,[mbOk],0);
-//      edtCodPeca.Text := '';
-//      edtCodigoOP.Text := '';
-//      edt_Retrab.Visible := False;
-//      edt_DtRetrab.Visible := False;
-//      lbl_Retrab.Visible := False;
-//      lbl_DtRetrab.Visible := False;
-//
-//      edt_Trabalho.Visible := True;
-//      edt_Dttrab.Visible := True;
-//      lbl_Trabalho.Visible := True;
-//      lbl_Dttrab.Visible := True;
 
       Q_CadPecas.FetchAll;
       Q_CadPecas.Close;

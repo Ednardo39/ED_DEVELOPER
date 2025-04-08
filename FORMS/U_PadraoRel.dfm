@@ -27,7 +27,7 @@ object frm_PadraoRel: Tfrm_PadraoRel
     ParentBackground = False
     TabOrder = 0
     object Label1: TLabel
-      Left = 111
+      Left = 144
       Top = 3
       Width = 135
       Height = 20
@@ -40,7 +40,7 @@ object frm_PadraoRel: Tfrm_PadraoRel
       ParentFont = False
     end
     object lb_nome: TLabel
-      Left = 295
+      Left = 310
       Top = 3
       Width = 4
       Height = 20
@@ -72,25 +72,15 @@ object frm_PadraoRel: Tfrm_PadraoRel
       Spacing = -5
       OnClick = btn_SairClick
     end
-    object SpeedButton2: TSpeedButton
-      Left = 0
-      Top = 0
-      Width = 73
-      Height = 57
-      Align = alLeft
-      ImageIndex = 0
-      Images = ImageList2
-      Flat = True
-    end
     object cb_chave_pesquisa: TComboBox
-      Left = 111
+      Left = 144
       Top = 23
       Width = 148
       Height = 23
       TabOrder = 0
     end
     object ed_nome: TEdit
-      Left = 295
+      Left = 310
       Top = 23
       Width = 162
       Height = 23
@@ -198,6 +188,15 @@ object frm_PadraoRel: Tfrm_PadraoRel
         ExplicitLeft = -7
         ExplicitHeight = 24
       end
+    end
+    object pnlLogo: TPanel
+      Left = 0
+      Top = 0
+      Width = 138
+      Height = 57
+      Align = alLeft
+      BevelOuter = bvNone
+      TabOrder = 4
     end
   end
   object Q_pesq_padrao: TFDQuery

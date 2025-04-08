@@ -1,6 +1,6 @@
 object DM: TDM
-  Height = 255
-  Width = 319
+  Height = 206
+  Width = 295
   object Conexao: TFDConnection
     Params.Strings = (
       'Database=C:\ED_DEVELOPER\EXE\DB\BASE_DB.FDB'

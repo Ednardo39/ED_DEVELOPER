@@ -53,6 +53,8 @@ type
     btnBuscarUsinagem: TSpeedButton;
     Panel2: TPanel;
     tbnPecaAvulsa: TSpeedButton;
+    Panel3: TPanel;
+    Label10: TLabel;
     procedure Timer1Timer(Sender: TObject);
     procedure btn_CodPrincipalClick(Sender: TObject);
     procedure btn_SalvarClick(Sender: TObject);

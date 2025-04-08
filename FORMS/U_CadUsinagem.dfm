@@ -1,22 +1,46 @@
 inherited frm_CadUsinagem: Tfrm_CadUsinagem
   BorderStyle = bsNone
   Caption = ''
-  ClientHeight = 548
+  ClientHeight = 515
   ClientWidth = 914
   Position = poMainFormCenter
   ExplicitWidth = 914
-  ExplicitHeight = 548
+  ExplicitHeight = 515
   TextHeight = 15
   inherited pnl_Cabecalho: TPanel
     Width = 914
-    ExplicitWidth = 634
+    ExplicitWidth = 914
+    inherited Label1: TLabel
+      Left = 164
+      ExplicitLeft = 164
+    end
     inherited btn_CodPrincipal: TSpeedButton
-      Left = 183
+      Left = 314
+      Top = 2
+      Width = 70
+      Height = 65
+      Layout = blGlyphTop
       OnClick = btn_CodPrincipalClick
-      ExplicitLeft = 183
+      ExplicitLeft = 314
+      ExplicitTop = 2
+      ExplicitWidth = 70
+      ExplicitHeight = 65
+    end
+    inherited Label2: TLabel
+      Left = 399
+      ExplicitLeft = 399
     end
     inherited btn_CodOP: TSpeedButton
+      Left = 497
+      Top = 2
+      Width = 70
+      Height = 65
+      Layout = blGlyphTop
       OnClick = btn_CodOPClick
+      ExplicitLeft = 497
+      ExplicitTop = 2
+      ExplicitWidth = 70
+      ExplicitHeight = 65
     end
     object SpeedButton1: TSpeedButton [4]
       Left = 833
@@ -40,7 +64,7 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
       ExplicitLeft = 616
     end
     object Label9: TLabel [5]
-      Left = 522
+      Left = 600
       Top = 5
       Width = 87
       Height = 17
@@ -53,10 +77,10 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
       ParentFont = False
     end
     object btnBuscarUsinagem: TSpeedButton [6]
-      Left = 663
-      Top = 24
-      Width = 113
-      Height = 29
+      Left = 736
+      Top = 2
+      Width = 70
+      Height = 65
       Cursor = crHandPoint
       Caption = 'BUSCAR'
       ImageIndex = 0
@@ -67,21 +91,27 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
       Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
+      Layout = blGlyphTop
       ParentFont = False
       OnClick = btnBuscarUsinagemClick
     end
     inherited edtCodPeca: TEdit
+      Left = 164
+      Width = 138
+      TextHint = 'Digite o c'#243'digo...'
       OnExit = edtCodPecaExit
       OnKeyPress = edtCodPecaKeyPress
+      ExplicitLeft = 164
+      ExplicitWidth = 138
     end
     inherited edtCodigoOP: TEdit
-      Left = 303
+      Left = 399
       OnExit = edtCodigoOPExit
       OnKeyPress = edtCodigoOPKeyPress
-      ExplicitLeft = 303
+      ExplicitLeft = 399
     end
     object edtCodUsinagem: TEdit
-      Left = 519
+      Left = 583
       Top = 24
       Width = 138
       Height = 29
@@ -97,6 +127,38 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
       TextHint = 'Cod. Usinagem'
       OnExit = edtCodUsinagemExit
       OnKeyPress = edtCodUsinagemKeyPress
+    end
+    object Panel3: TPanel
+      Left = 0
+      Top = 0
+      Width = 158
+      Height = 65
+      Align = alLeft
+      BevelOuter = bvNone
+      Color = 15458266
+      ParentBackground = False
+      TabOrder = 3
+      ExplicitLeft = 16
+      ExplicitTop = -6
+      object Label10: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 152
+        Height = 59
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'PLANMOV'#201'IS'#13#10'USINAGENS'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 5585461
+        Font.Height = -19
+        Font.Name = 'Segoe UI Black'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Layout = tlCenter
+        ExplicitWidth = 126
+        ExplicitHeight = 50
+      end
     end
   end
   inherited DBGrid1: TDBGrid
@@ -161,6 +223,11 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         Alignment = taCenter
         Expanded = False
         FieldName = 'USINAGEM'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
         Title.Alignment = taCenter
         Width = 70
         Visible = True
@@ -177,6 +244,11 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         Alignment = taCenter
         Expanded = False
         FieldName = 'RETRAB_USI'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
         Title.Alignment = taCenter
         Title.Caption = 'RETRABALHO'
         Width = 85
@@ -195,88 +267,89 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
   inherited pnl_FundoForm: TPanel
     Top = 290
     Width = 914
-    Height = 239
+    Height = 206
     Align = alClient
-    ExplicitTop = 173
-    ExplicitWidth = 634
-    ExplicitHeight = 213
+    ExplicitTop = 290
+    ExplicitWidth = 914
+    ExplicitHeight = 191
+    DesignSize = (
+      914
+      206)
     object Panel1: TPanel
-      Left = 291
-      Top = 7
-      Width = 393
-      Height = 212
+      Left = 117
+      Top = 6
+      Width = 667
+      Height = 163
       Anchors = []
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 142
-      ExplicitTop = -5
       object Label3: TLabel
-        Left = 7
-        Top = 8
+        Left = 143
+        Top = 10
         Width = 43
         Height = 15
         Caption = 'N'#176' LOTE'
         FocusControl = DBEdit1
       end
       object Label4: TLabel
-        Left = 198
-        Top = 8
+        Left = 334
+        Top = 10
         Width = 58
         Height = 15
         Caption = 'N'#176' PEDIDO'
         FocusControl = DBEdit2
       end
       object Label5: TLabel
-        Left = 298
-        Top = 8
+        Left = 434
+        Top = 10
         Width = 55
         Height = 15
         Caption = 'N'#176' DA O.P'
         FocusControl = DBEdit3
       end
       object Label6: TLabel
-        Left = 7
-        Top = 54
-        Width = 97
+        Left = 143
+        Top = 56
+        Width = 114
         Height = 15
-        Caption = 'DESCRICAO_PECA'
+        Caption = 'DESCRI'#199#195'O DA PE'#199'A'
         FocusControl = DBEdit4
       end
       object Label7: TLabel
-        Left = 101
-        Top = 8
+        Left = 237
+        Top = 10
         Width = 66
         Height = 15
         Caption = 'COD. GERAL'
         FocusControl = DBEdit5
       end
       object Label8: TLabel
-        Left = 7
-        Top = 100
+        Left = 143
+        Top = 102
         Width = 107
         Height = 15
         Caption = 'COD. DE USINAGEM'
         FocusControl = DBEdit6
       end
       object lbl_Trabalho: TLabel
-        Left = 145
-        Top = 100
+        Left = 281
+        Top = 102
         Width = 59
         Height = 15
         Caption = 'USINAGEM'
         FocusControl = edt_Trabalho
       end
       object lbl_DtTrab: TLabel
-        Left = 239
-        Top = 100
+        Left = 375
+        Top = 102
         Width = 99
         Height = 15
         Caption = 'DT. DO TRABALHO'
         FocusControl = edt_DtTrab
       end
       object lbl_Retrab: TLabel
-        Left = 145
-        Top = 101
+        Left = 281
+        Top = 103
         Width = 63
         Height = 15
         Caption = 'RETRAB_USI'
@@ -284,8 +357,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         Visible = False
       end
       object lbl_DtReTrab: TLabel
-        Left = 239
-        Top = 101
+        Left = 375
+        Top = 103
         Width = 81
         Height = 15
         Caption = 'DT_RETRAB_USI'
@@ -293,8 +366,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         Visible = False
       end
       object DBEdit1: TDBEdit
-        Left = 7
-        Top = 24
+        Left = 143
+        Top = 26
         Width = 80
         Height = 25
         DataField = 'NUMERO_DO_LOTE'
@@ -309,8 +382,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 0
       end
       object DBEdit2: TDBEdit
-        Left = 198
-        Top = 24
+        Left = 334
+        Top = 26
         Width = 80
         Height = 25
         DataField = 'NUMERO_DO_PEDIDO'
@@ -325,8 +398,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 1
       end
       object DBEdit3: TDBEdit
-        Left = 298
-        Top = 24
+        Left = 434
+        Top = 26
         Width = 80
         Height = 25
         DataField = 'NUMERO_DA_ORDEM'
@@ -341,8 +414,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 2
       end
       object DBEdit4: TDBEdit
-        Left = 5
-        Top = 70
+        Left = 141
+        Top = 72
         Width = 373
         Height = 25
         CharCase = ecUpperCase
@@ -358,8 +431,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 3
       end
       object DBEdit5: TDBEdit
-        Left = 101
-        Top = 24
+        Left = 237
+        Top = 26
         Width = 80
         Height = 25
         DataField = 'ID'
@@ -374,8 +447,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 4
       end
       object DBEdit6: TDBEdit
-        Left = 7
-        Top = 116
+        Left = 143
+        Top = 118
         Width = 121
         Height = 25
         DataField = 'DESENHO_PROGRAMADO_1'
@@ -390,8 +463,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 5
       end
       object edt_Trabalho: TDBEdit
-        Left = 145
-        Top = 116
+        Left = 281
+        Top = 118
         Width = 81
         Height = 25
         CharCase = ecUpperCase
@@ -407,8 +480,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         OnKeyPress = edt_TrabalhoKeyPress
       end
       object edt_DtTrab: TDBEdit
-        Left = 239
-        Top = 116
+        Left = 375
+        Top = 118
         Width = 139
         Height = 25
         DataField = 'DT_TRABALHO'
@@ -422,18 +495,18 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         TabOrder = 7
       end
       object pnl_Salvar: TPanel
-        Left = 5
-        Top = 147
-        Width = 90
-        Height = 60
+        Left = 24
+        Top = 48
+        Width = 104
+        Height = 65
         Color = clMenuHighlight
         ParentBackground = False
         TabOrder = 8
         object btn_Salvar: TSpeedButton
           Left = 1
           Top = 1
-          Width = 88
-          Height = 58
+          Width = 102
+          Height = 63
           Cursor = crHandPoint
           Align = alClient
           Caption = 'SALVAR'
@@ -448,15 +521,14 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
           Layout = blGlyphTop
           ParentFont = False
           OnClick = btn_SalvarClick
-          ExplicitLeft = 2
-          ExplicitTop = -2
-          ExplicitWidth = 121
-          ExplicitHeight = 33
+          ExplicitTop = -3
+          ExplicitWidth = 88
+          ExplicitHeight = 36
         end
       end
       object edt_Retrab: TDBEdit
-        Left = 145
-        Top = 117
+        Left = 281
+        Top = 119
         Width = 79
         Height = 25
         CharCase = ecUpperCase
@@ -474,8 +546,8 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         OnKeyPress = edt_RetrabKeyPress
       end
       object edt_DtReTrab: TDBEdit
-        Left = 239
-        Top = 117
+        Left = 375
+        Top = 119
         Width = 139
         Height = 23
         Color = clYellow
@@ -485,10 +557,10 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         Visible = False
       end
       object Panel2: TPanel
-        Left = 144
-        Top = 148
-        Width = 201
-        Height = 61
+        Left = 520
+        Top = 48
+        Width = 104
+        Height = 65
         BevelOuter = bvNone
         Color = clGold
         ParentBackground = False
@@ -496,18 +568,20 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
         object tbnPecaAvulsa: TSpeedButton
           Left = 0
           Top = 0
-          Width = 201
-          Height = 61
+          Width = 104
+          Height = 65
+          Cursor = crHandPoint
           Align = alClient
-          Caption = 'PE'#199'A AVULSA'
+          Caption = 'PE'#199'A'#13#10'AVULSA'
           ImageIndex = 3
           Images = ImageList1
           Flat = True
           Font.Charset = ANSI_CHARSET
           Font.Color = clNavy
-          Font.Height = -19
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
+          Layout = blGlyphTop
           ParentFont = False
           OnClick = tbnPecaAvulsaClick
           ExplicitLeft = 16
@@ -520,7 +594,7 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
   end
   object StatusBar1: TStatusBar [3]
     Left = 0
-    Top = 529
+    Top = 496
     Width = 914
     Height = 19
     Panels = <
@@ -536,8 +610,7 @@ inherited frm_CadUsinagem: Tfrm_CadUsinagem
       item
         Width = 150
       end>
-    ExplicitTop = 386
-    ExplicitWidth = 634
+    ExplicitTop = 529
   end
   inherited Timer1: TTimer
     Top = 104

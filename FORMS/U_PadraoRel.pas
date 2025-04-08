@@ -27,10 +27,10 @@ type
     ImageList1: TImageList;
     btn_Sair: TSpeedButton;
     ImageList3: TImageList;
-    SpeedButton2: TSpeedButton;
     ImageList2: TImageList;
     REL_pesq_padrao: TfrxReport;
     DatSET_pesq_padrao: TfrxDBDataset;
+    pnlLogo: TPanel;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure btn_SairClick(Sender: TObject);
